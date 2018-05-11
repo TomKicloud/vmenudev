@@ -362,7 +362,7 @@ namespace vMenuClient
                 }
 
                 // Create the main menu.
-                Menu = new UIMenu(GetPlayerName(PlayerId()), "Main Menu", true)
+                Menu = new UIMenu("DoJRP", "Main Menu", true)
                 {
                     ScaleWithSafezone = false,
                     MouseControlsEnabled = false,

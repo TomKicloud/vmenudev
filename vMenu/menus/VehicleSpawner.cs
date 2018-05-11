@@ -52,7 +52,7 @@ namespace vMenuClient
             };
 
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Vehicle Spawner", true)
+            menu = new UIMenu("DoJRP", "Vehicle Spawner", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

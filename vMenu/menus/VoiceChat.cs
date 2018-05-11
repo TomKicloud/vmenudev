@@ -49,7 +49,7 @@ namespace vMenuClient
             }
 
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Voice Chat Settings", true)
+            menu = new UIMenu("DoJRP", "Voice Chat Settings", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

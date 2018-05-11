@@ -35,7 +35,7 @@ namespace vMenuClient
         {
 
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Misc Settings", true)
+            menu = new UIMenu("DoJRP", "Misc Settings", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

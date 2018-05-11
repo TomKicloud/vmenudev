@@ -24,7 +24,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Time Options", true)
+            menu = new UIMenu("DoJRP", "Time Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

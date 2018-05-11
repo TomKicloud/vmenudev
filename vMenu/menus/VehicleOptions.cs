@@ -49,7 +49,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Vehicle Options", true)
+            menu = new UIMenu("DoJRP", "Vehicle Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

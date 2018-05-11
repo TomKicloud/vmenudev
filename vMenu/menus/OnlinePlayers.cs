@@ -24,7 +24,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Online Players", true)
+            menu = new UIMenu("DoJRP", "Online Players", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

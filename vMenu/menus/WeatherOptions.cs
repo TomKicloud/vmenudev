@@ -24,7 +24,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu(GetPlayerName(PlayerId()), "Weather Options", true)
+            menu = new UIMenu("DoJRP", "Weather Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
