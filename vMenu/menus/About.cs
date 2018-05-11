@@ -20,7 +20,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu("vMenu", "About DOJ Menu", true)
+            menu = new UIMenu("DoJ Menu", "About DOJ Menu", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
