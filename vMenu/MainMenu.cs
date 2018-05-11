@@ -705,7 +705,7 @@ namespace vMenuClient
             // Add About Menu.
             AboutMenu = new About();
             UIMenu sub = AboutMenu.GetMenu();
-            UIMenuItem btn = new UIMenuItem("About vMenu", "Information about this menu and it's creators.");
+            UIMenuItem btn = new UIMenuItem("About DOJ Menu", "Information about this menu and it's creators.");
             btn.SetRightLabel("→→→");
             AddMenu(sub, btn);
 
