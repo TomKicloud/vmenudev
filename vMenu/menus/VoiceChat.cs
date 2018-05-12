@@ -62,14 +62,14 @@ namespace vMenuClient
 
             List<dynamic> proximity = new List<dynamic>()
             {
-                "5 m",
-                "10 m",
-                "15 m",
-                "20 m",
-                "100 m",
-                "300 m",
-                "1 km",
-                "2 km",
+                "Whisper [5m]",
+                "Whisper [10m]",
+                "Normal [15m]",
+                "Normal [20m]",
+                "Shout [100m]",
+                "Shout [300m]",
+                "Scream [1km]",
+                "Scream [2km]",
                 "Global",
             };
             UIMenuListItem voiceChatProximity = new UIMenuListItem("Voice Chat Proximity", proximity, proximityRange.IndexOf(currentProximity), "Set the voice chat receiving proximity in meters.");
