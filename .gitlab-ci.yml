@@ -1,0 +1,18 @@
+variables:
+  NUGET_PATH: 'C:\NuGet\nuget.exe'
+  MSBUILD_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin\msbuild.exe'
+
+stages:
+  - build
+build_job:
+  stage: build
+  tags:
+    - netframework
+  #only:
+  #  - tags # the build process will only be started by git tag commits
+  script:
+    - '& "$env:MSBUILD_PATH" /p:Configuration=Release'
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - '..\build\**'
