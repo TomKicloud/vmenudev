@@ -15,4 +15,5 @@ build_job:
   artifacts:
     expire_in: 1 week
     paths:
-      - '..\build\**'
+      - 'vMenu\bin\Release\**'
+      - 'vMenuServer\bin\Release\**'
