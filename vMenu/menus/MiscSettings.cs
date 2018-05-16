@@ -58,7 +58,9 @@ namespace vMenuClient
             UIMenuCheckboxItem nightVision = new UIMenuCheckboxItem("Toggle Night Vision", false, "Enable or disable night vision.");
             UIMenuCheckboxItem thermalVision = new UIMenuCheckboxItem("Toggle Thermal Vision", false, "Enable or disable thermal vision.");
 
-            UIMenuItem clearArea = new UIMenuItem("Clear Area", "Clears the area around your player (100 meters) of everything! Damage, dirt, peds, props, vehicles, etc. Everything gets cleaned up and reset.");
+            UIMenuItem clearArea = new UIMenuItem("Clear Area Of Vehicles", "Clears the area around your player (100 meters) of Vehicles.");
+            UIMenuItem clearAreaPeds = new UIMenuItem("Clear Area Of Peds", "Clears the area around your player (100 meters) of Peds.");
+            UIMenuItem clearAreaObjects = new UIMenuItem("Clear Area Of Objects", "Clears the area around your player (100 meters) of Objects.");
             UIMenuCheckboxItem lockCamX = new UIMenuCheckboxItem("Lock Camera Horizontal Rotation", false, "Locks your camera horizontal rotation. Could be useful in helicopters I guess.");
             UIMenuCheckboxItem lockCamY = new UIMenuCheckboxItem("Lock Camera Vertical Rotation", false, "Locks your camera vertical rotation. Could be useful in helicopters I guess.");
 
@@ -99,6 +101,8 @@ namespace vMenuClient
             if (cf.IsAllowed(Permission.MSClearArea))
             {
                 menu.AddItem(clearArea);
+                menu.AddItem(clearAreaPeds);
+                menu.AddItem(clearAreaObjects);
             }
 
             // Always allowed
@@ -179,6 +183,18 @@ namespace vMenuClient
                 {
                     var pos = Game.PlayerPed.Position;
                     ClearAreaOfVehicles(pos.X, pos.Y, pos.Z, 100f, false, false, false, false, false);
+                }
+                // clear area peds
+                else if (item == clearAreaPeds)
+                {
+                    var pos = Game.PlayerPed.Position;
+                    ClearAreaOfPeds(pos.X, pos.Y, 100f, 100, 1);
+                }
+                // clear area objects
+                else if (item == clearAreaObjects)
+                {
+                    var pos = Game.PlayerPed.Position;
+                    ClearAreaOfObjects(pos.X, pos.Y, 100f, 100, 1);
                 }
             };
         }

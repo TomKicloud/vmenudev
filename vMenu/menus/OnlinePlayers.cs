@@ -84,11 +84,11 @@ namespace vMenuClient
                         UIMenuItem teleportBtn = new UIMenuItem("Teleport To Player", "Teleport to this player.");
                         UIMenuItem teleportInVehBtn = new UIMenuItem("Teleport Into Vehicle", "Teleport into the player's vehicle.");
                         UIMenuItem setWaypointBtn = new UIMenuItem("Set Waypoint", "Set a waypoint to this player.");
-                        UIMenuItem spectateBtn = new UIMenuItem("Spectate Player", "Spectate this player.");
                         UIMenuItem summonBtn = new UIMenuItem("Summon Player", "Bring this player to your location.");
                         summonBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
                         UIMenuItem killBtn = new UIMenuItem("Kill Player", "Kill the selected player! Why are you so cruel :(");
                         killBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
+                        UIMenuItem spectateBtn = new UIMenuItem("Spectate Player", "Spectate this player.");
                         UIMenuItem kickPlayerBtn = new UIMenuItem("~r~Kick Player", "~r~Kick~s~ this player from the server, you need to specify a reason " +
                             "otherwise the kick will be cancelled.");
                         kickPlayerBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
