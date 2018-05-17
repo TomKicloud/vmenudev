@@ -99,22 +99,22 @@ namespace vMenuClient
                         tempBanBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
 
                         // Add all buttons to the player options submenu. Keeping permissions in mind.
-                        if (cf.IsAllowed(Permission.OPTeleport))
+                        if (cf.IsAllowed(Permission.OPSpectate))
                         {
-                            PlayerMenu.AddItem(teleportBtn);
-                            PlayerMenu.AddItem(teleportInVehBtn);
+                            PlayerMenu.AddItem(spectateBtn);
                         }
                         if (cf.IsAllowed(Permission.OPWaypoint))
                         {
                             PlayerMenu.AddItem(setWaypointBtn);
                         }
-                        if (cf.IsAllowed(Permission.OPSpectate))
-                        {
-                            PlayerMenu.AddItem(spectateBtn);
-                        }
                         if (cf.IsAllowed(Permission.OPSummon))
                         {
                             PlayerMenu.AddItem(summonBtn);
+                        }
+                        if (cf.IsAllowed(Permission.OPTeleport))
+                        {
+                            PlayerMenu.AddItem(teleportBtn);
+                            PlayerMenu.AddItem(teleportInVehBtn);
                         }
                         if (cf.IsAllowed(Permission.OPKill))
                         {
