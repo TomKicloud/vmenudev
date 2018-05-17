@@ -138,7 +138,39 @@ namespace vMenuClient
                 SetDriverAbility(PlayerPedId(), 100f);
                 SetDriverAggressiveness(PlayerPedId(), 0f);
                 //TaskVehicleDriveToCoord(PlayerPedId(), veh, waypoint.X, waypoint.Y, waypoint.Z, GetVehicleModelMaxSpeed(model), 0, model, 1074528293, 12f, 0f);
-                TaskVehicleDriveToCoordLongrange(PlayerPedId(), veh, waypoint.X, waypoint.Y, waypoint.Z, GetVehicleModelMaxSpeed(model), 1074528293, 10f);
+                TaskVehicleDriveToCoordLongrange(PlayerPedId(), veh, waypoint.X, waypoint.Y, waypoint.Z, GetVehicleModelMaxSpeed(model), 786603, 10f);
+
+                // Rushed = 1074528293
+                // Normal = 786603 according to gtaforums.com...
+                // www.gtaforums.com/topic/822314-guide-driving-styles/
+
+                // Although, adding the binary values of the driving flags gets 183 though, which is what RPH docs say Normal is?
+                // e.g. ( 1 | 2 | 4 | 16 | 32 | 128 ) = 183
+                // It might be just a different way of saying the same thing, but if 786603 doesn't work, try 183 I guess
+
+                /* VehicleDrivingFlags from RPH classes
+                 * 
+                 * public enum VehicleDrivingFlags : uint
+                    {
+                        None = 0,
+                        FollowTraffic = 1,
+                        YieldToCrossingPedestrians = 2,
+                        DriveAroundVehicles = 4,
+                        DriveAroundPeds = 16,
+                        DriveAroundObjects = 32,
+                        RespectIntersections = 128,
+                        Normal = 183,
+                        AllowWrongWay = 512,
+                        Reverse = 1024,
+                        AllowMedianCrossing = 262144,
+                        Emergency = 262710,
+                        DriveBySight = 4194304,
+                        IgnorePathFinding = 16777216,
+                        AvoidHighways = 536870912,
+                        StopAtDestination = 2147483648
+                    }
+                 */
+
             }
         }
 
@@ -160,7 +192,7 @@ namespace vMenuClient
                 var model = (uint)GetEntityModel(veh);
                 SetDriverAbility(PlayerPedId(), 100f);
                 SetDriverAggressiveness(PlayerPedId(), 0f);
-                TaskVehicleDriveWander(PlayerPedId(), veh, GetVehicleModelMaxSpeed(model), 1074528293);
+                TaskVehicleDriveWander(PlayerPedId(), veh, GetVehicleModelMaxSpeed(model), 786603); // See comments above re: driving modes
             }
         }
         #endregion
