@@ -8,6 +8,7 @@ using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using NativeUI;
 using System.Dynamic;
+using CitizenFX.Core.Native;
 
 namespace vMenuClient
 {
@@ -546,6 +547,23 @@ namespace vMenuClient
                 TriggerEvent("doj_menu:toggleMenu");
             }
 
+        }
+
+
+        public async void point()
+        {
+
+            if (IsControlJustPressed(0, 29))
+            {
+
+                API.TaskPlayAnim(API.GetPlayerPed(-1), "anim@mp_point", "task_mp_pointing", (float)0.5, 0, 24, 0, 0, false, false, false);
+
+                if (IsControlJustPressed(0, 29))
+                {
+                    API.ClearPedTasks(API.GetPlayerPed(-1));
+                    API.ClearPedSecondaryTask(API.GetPlayerPed(-1));
+                }
+            }
         }
 
         #region Add Menu Function
