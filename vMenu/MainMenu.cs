@@ -22,6 +22,7 @@ namespace vMenuClient
         public static MenuPool Mp { get; } = new MenuPool();
 
         private bool firstTick = true;
+        private bool dojMenu = false;
         private static bool permissionsSetupDone = false;
         private static bool optionsSetupDone = false;
         public static bool addonCarsLoaded = false;
@@ -536,6 +537,15 @@ namespace vMenuClient
                     Mp.Draw();
                 }
             }
+
+            // Open doj menu if button is selected
+            if (dojMenu)
+            {
+                dojMenu = false;
+                Mp.CloseAllMenus();
+                TriggerEvent("doj_menu:toggleMenu");
+            }
+
         }
 
         #region Add Menu Function
@@ -578,6 +588,19 @@ namespace vMenuClient
                     }
                 };
             }
+
+            // Create button for doj menu
+            UIMenuItem DojMenu = new UIMenuItem("Open DOJ Menu", "Doj or 'M' menu");
+            DojMenu.SetRightLabel("→→→");
+            AddMenu(Menu, DojMenu);
+            Menu.OnItemSelect += (sender, item, index) =>
+            {
+                if (item == DojMenu)
+                {
+                    dojMenu = true;
+                }
+            };
+
             if (Cf.IsAllowed(Permission.OPUnban))
             {
                 TriggerServerEvent("vMenu:RequestBanList", PlayerId());
