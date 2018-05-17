@@ -165,7 +165,7 @@ namespace vMenuClient
                     lastWeather = currentWeatherType;
                     SetWeatherTypeOverTime(currentWeatherType, 15f);
                     int tmpTimer = GetGameTimer();
-                    while (GetGameTimer() - tmpTimer < 15500) // wait 15.5 _real_ seconds
+                    while (GetGameTimer() - tmpTimer < 1800000) // wait 30 minutes
                     {
                         await Delay(0);
                     }
