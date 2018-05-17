@@ -402,7 +402,7 @@ namespace vMenuClient
                             Menu.Visible = !Mp.IsAnyMenuOpen();
                         }
                     }
-
+                    /*
                     // If the player is using a controller, and no menus are currently open.
                     else if (!Mp.IsAnyMenuOpen() && Game.CurrentInputMode == InputMode.GamePad)
                     {
@@ -432,6 +432,7 @@ namespace vMenuClient
                             await Delay(0);
                         }
                     }
+                    */
 
                     if (Game.CurrentInputMode == InputMode.MouseAndKeyboard)
                     {
