@@ -539,6 +539,11 @@ namespace vMenuClient
                 }
             }
 
+            if (Game.IsControlJustPressed(0, Control.PhoneCancel))
+            {
+                Mp.CloseAllMenus();
+            }
+
             // Open doj menu if button is selected
             if (dojMenu)
             {
@@ -549,8 +554,8 @@ namespace vMenuClient
 
         }
 
-
-        public async void point()
+        // Point function
+        public void point()
         {
 
             if (IsControlJustPressed(0, 29))
