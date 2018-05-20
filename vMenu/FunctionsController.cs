@@ -118,7 +118,7 @@ namespace vMenuClient
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion
@@ -228,7 +228,7 @@ namespace vMenuClient
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion
@@ -368,7 +368,7 @@ namespace vMenuClient
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion
@@ -560,7 +560,7 @@ namespace vMenuClient
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
 
@@ -595,7 +595,7 @@ namespace vMenuClient
                 }
                 else
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
             }
         }
@@ -707,7 +707,7 @@ namespace vMenuClient
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion
@@ -765,7 +765,7 @@ namespace vMenuClient
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion
@@ -791,13 +791,13 @@ namespace vMenuClient
                     DoScreenFadeIn(50);
                     while (GetEntityHealth(PlayerPedId()) < 1)
                     {
-                        await Delay(0);
+                        await Delay(10);
                     }
                 }
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion

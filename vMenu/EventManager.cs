@@ -145,7 +145,7 @@ namespace vMenuClient
                         RequestNamedPtfxAsset("core_snow");
                         while (!HasNamedPtfxAssetLoaded("core_snow"))
                         {
-                            await Delay(0);
+                            await Delay(10);
                         }
                         UseParticleFxAssetNextCall("core_snow");
                         SetForceVehicleTrails(true);
@@ -167,7 +167,7 @@ namespace vMenuClient
                     int tmpTimer = GetGameTimer();
                     while (GetGameTimer() - tmpTimer < 1800000) // wait 30 minutes
                     {
-                        await Delay(0);
+                        await Delay(10);
                     }
                     SetWeatherTypeNow(currentWeatherType);
                     justChanged = true;
@@ -194,7 +194,7 @@ namespace vMenuClient
                 if (freezeTime)
                 {
                     // Time is set every tick to make sure it never changes (even with some lag).
-                    await Delay(0);
+                    await Delay(10);
                     NetworkOverrideClockTime(currentHours, currentMinutes, 0);
                 }
                 // Otherwise...

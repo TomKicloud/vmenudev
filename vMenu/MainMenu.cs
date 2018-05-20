@@ -184,14 +184,14 @@ namespace vMenuClient
                     else if (Game.IsDisabledControlJustReleased(0, Control.PhoneCancel))
                     {
                         // Wait for the next frame to make sure the "cinematic camera" button doesn't get "re-enabled" before the menu gets closed.
-                        await Delay(0);
+                        await Delay(10);
                         currentMenu.GoBack();
                     }
                 }
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
 
@@ -247,7 +247,7 @@ namespace vMenuClient
                             }
 
                             // Wait for the next game tick.
-                            await Delay(0);
+                            await Delay(10);
                         }
                     }
 
@@ -271,7 +271,7 @@ namespace vMenuClient
                                 currentMenu.GoLeft();
                                 time = GetGameTimer();
                             }
-                            await Delay(0);
+                            await Delay(10);
                         }
                     }
 
@@ -295,7 +295,7 @@ namespace vMenuClient
                                 currentMenu.GoRight();
                                 time = GetGameTimer();
                             }
-                            await Delay(0);
+                            await Delay(10);
                         }
                     }
 
@@ -321,18 +321,18 @@ namespace vMenuClient
                                 currentMenu.GoDownOverflow();
                                 time = GetGameTimer();
                             }
-                            await Delay(0);
+                            await Delay(10);
                         }
                     }
                 }
                 else
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
             }
             else
             {
-                await Delay(0);
+                await Delay(10);
             }
         }
         #endregion
@@ -360,7 +360,7 @@ namespace vMenuClient
                     || GetPlayerName(PlayerId()) == "**Invalid**" || GetPlayerName(PlayerId()) == "** Invalid **" ||
                     !addonCarsLoaded || !addonPedsLoaded || !addonWeaponsLoaded)
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
 
                 // Create the main menu.
@@ -431,7 +431,7 @@ namespace vMenuClient
                             }
 
                             // Wait for the next game tick. 
-                            await Delay(0);
+                            await Delay(10);
                         }
                     }
                     */

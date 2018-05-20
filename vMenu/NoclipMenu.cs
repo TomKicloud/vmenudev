@@ -49,14 +49,14 @@ namespace vMenuClient
             else if (cf == null)
             {
                 cf = MainMenu.Cf;
-                await Delay(0);
+                await Delay(10);
             }
             // Setup is done.
             else
             {
                 if (noclipMenu == null)
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
                 else
                 {
@@ -141,7 +141,7 @@ namespace vMenuClient
                         }
 
                         // After the next game tick, reset the entity properties.
-                        await Delay(0);
+                        await Delay(10);
                         FreezeEntityPosition(noclipEntity, false);
                         SetEntityInvincible(noclipEntity, false);
                         SetEntityCollision(noclipEntity, true, true);

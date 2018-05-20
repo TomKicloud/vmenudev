@@ -293,7 +293,7 @@ namespace vMenuClient
             var z = 0f;
             while (!GetGroundZFor_3dCoord(pos.X, pos.Y, z, ref outputZ, true))
             {
-                await Delay(0);
+                await Delay(10);
                 if (GetGameTimer() - timer > 5000)
                 {
                     failed = true;
@@ -458,7 +458,7 @@ namespace vMenuClient
             RequestAnimDict("mp_suicide");
             while (!HasAnimDictLoaded("mp_suicide"))
             {
-                await Delay(0);
+                await Delay(10);
             }
             // Decide if the death should be using a pill or a gun (randomly).
             bool takePill = new Random().Next(0, 2) == 0;
@@ -1062,7 +1062,7 @@ namespace vMenuClient
                 // Wait until it's loaded.
                 while (!HasModelLoaded(modelHash))
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
                 // Model is loaded, return true.
                 return true;
@@ -1094,7 +1094,7 @@ namespace vMenuClient
 
             // Display the input box.
             DisplayOnscreenKeyboard(1, $"{GetCurrentResourceName().ToUpper()}_WINDOW_TITLE", "", defaultText ?? "", "", "", "", maxInputLength);
-            await Delay(0);
+            await Delay(10);
             // Wait for a result.
             while (true)
             {
@@ -1116,10 +1116,10 @@ namespace vMenuClient
                 // Still editing
                 else
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
                 // Just in case something goes wrong, add wait to prevent crashing.
-                await Delay(0);
+                await Delay(10);
             }
             // Get the result
             int status = UpdateOnscreenKeyboard();
@@ -1714,7 +1714,7 @@ namespace vMenuClient
                 RequestModel(modelHash);
                 while (!HasModelLoaded(modelHash))
                 {
-                    await Delay(0);
+                    await Delay(10);
                 }
                 SetPlayerModel(PlayerId(), modelHash);
                 SetPedDefaultComponentVariation(PlayerPedId());
@@ -2001,7 +2001,7 @@ namespace vMenuClient
         /// </summary>
         public async void RestoreWeaponLoadout()
         {
-            await Delay(0);
+            await Delay(10);
             if (weaponsList.Count > 0)
             {
                 foreach (WeaponInfo wi in weaponsList)
@@ -2191,7 +2191,7 @@ namespace vMenuClient
                         RequestAnimDict(animDict);
                         while (!HasAnimDictLoaded(animDict))
                         {
-                            await Delay(0);
+                            await Delay(10);
                         }
                     }
                     SetPedAlternateMovementAnim(PlayerPedId(), 0, animDict, "idle", 1f, true);

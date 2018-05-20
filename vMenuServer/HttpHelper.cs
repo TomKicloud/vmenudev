@@ -54,7 +54,7 @@ namespace GHMatti.Http
             int token = API.PerformHttpRequestInternal(json, json.Length);
             while (!responseDictionary.ContainsKey(token))
             {
-                await Delay(0);
+                await Delay(10);
             }
             Dictionary<string, dynamic> res = responseDictionary[token];
             responseDictionary.Remove(token);
