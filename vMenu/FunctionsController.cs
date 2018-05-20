@@ -109,10 +109,11 @@ namespace vMenuClient
                             lastOpenMenu = null;
                         }
 
-                        // Wait 5 ticks before allowing the menu to be controlled, to prevent accidental interactions when the menu JUST re-appeared.
-                        await Delay(5);
-                        MainMenu.DisableControls = false;
+                        
                     }
+                    // Wait 5 ticks before allowing the menu to be controlled, to prevent accidental interactions when the menu JUST re-appeared.
+                    await Delay(5);
+                    MainMenu.DisableControls = false;
                 }
             }
             else
