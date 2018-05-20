@@ -22,6 +22,7 @@ namespace vMenuClient
 
         public bool driveToWpTaskActive = false;
         public bool driveWanderTaskActive = false;
+        public bool inputOpenFromvMenu = false;
         #endregion
 
         /// <summary>
@@ -1085,6 +1086,8 @@ namespace vMenuClient
         /// <returns>Reruns the input or "NULL" if cancelled.</returns>
         public async Task<string> GetUserInput(string windowTitle = null, string defaultText = null, int maxInputLength = 20)
         {
+            inputOpenFromvMenu = true;
+            MainMenu.DontOpenMenus = true;
             // Create the window title string.
             var spacer = "\t";
             AddTextEntry($"{GetCurrentResourceName().ToUpper()}_WINDOW_TITLE", $"{windowTitle ?? "Enter"}:{spacer}(MAX {maxInputLength.ToString()} Characters)");
@@ -1125,13 +1128,16 @@ namespace vMenuClient
             // If the result is not empty or null
             if (result != "" && result != null && status == 1)
             {
+                MainMenu.DontOpenMenus = false;
                 // Return result.
                 return result.ToString();
             }
             else
             {
+                MainMenu.DontOpenMenus = false;
                 return "NULL";
             }
+
         }
         #endregion
 

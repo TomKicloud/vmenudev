@@ -95,11 +95,11 @@ namespace vMenuClient
                 // Otherwise, check if the "DontOpenMenus" option is (still) true.
                 else
                 {
-                    if (MainMenu.DontOpenMenus)
+                    MainMenu.DontOpenMenus = false;
+                    if (MainMenu.DontOpenMenus && cf.inputOpenFromvMenu)
                     {
                         // Allow menus from being displayed.
-                        MainMenu.DontOpenMenus = false;
-
+                        cf.inputOpenFromvMenu = false;
                         // Check if the previous menu isn't null.
                         if (lastOpenMenu != null)
                         {

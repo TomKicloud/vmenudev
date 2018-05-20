@@ -493,6 +493,8 @@ namespace vMenuClient
                     }
                     // Disable Shared Controls
 
+                    //Chat toggle
+                    Game.DisableControlThisFrame(0, Control.MpTextChatAll);
                     // Radio Inputs
                     Game.DisableControlThisFrame(0, Control.RadioWheelLeftRight);
                     Game.DisableControlThisFrame(0, Control.RadioWheelUpDown);
