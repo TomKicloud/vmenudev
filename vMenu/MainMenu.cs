@@ -566,7 +566,7 @@ namespace vMenuClient
                 {
                     if (AnyMovementOrAttackControlPressed())
                     {
-                        Cf.StopActiveScenario();
+                        Cf.StopActiveScenario(false);
                     }
                 }
                 else

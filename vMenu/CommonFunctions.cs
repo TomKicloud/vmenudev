@@ -1331,11 +1331,11 @@ namespace vMenuClient
 
         }
 
-        public void StopActiveScenario()
+        public void StopActiveScenario(bool stopImmediately)
         {
-            // Play a new scenario named "forcestop" (this scenario doesn't exist, but the "Play" function checks
-            // for the string "forcestop", if that's provided as th scenario name then it will forcefully clear the player task.
-            PlayScenario("forcestop");
+            currentScenario = "";
+            ClearPedTasks(PlayerPedId());
+            if (stopImmediately) ClearPedTasksImmediately(PlayerPedId());
         }
 
         public bool IsAnyScenarioPlaying()

@@ -292,7 +292,7 @@ namespace vMenuClient
                 // Force Stop Scenario button
                 if (item == stopScenario)
                 {
-                    cf.StopActiveScenario();
+                    cf.StopActiveScenario(true);
                 }
             };
             #endregion
