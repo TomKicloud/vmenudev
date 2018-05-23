@@ -110,6 +110,7 @@ namespace vMenuClient
                 Tick += OnTick;
                 Tick += ProcessMainButtons;
                 Tick += ProcessDirectionalButtons;
+                Tick += ProcessActiveScenario;
             }
 
         }
@@ -554,6 +555,45 @@ namespace vMenuClient
                 TriggerEvent("doj_menu:toggleMenu");
             }
 
+        }
+
+        private async Task ProcessActiveScenario()
+        {
+            if (!firstTick)
+            {
+                // Only execute this after the first tick is done
+                if (Cf.IsAnyScenarioPlaying())
+                {
+                    if (AnyMovementOrAttackControlPressed())
+                    {
+                        Cf.StopActiveScenario();
+                    }
+                }
+                else
+                {
+                    // If no active scenario, wait half a second before checking again
+                    await Delay(500);
+                }
+            }
+        }
+
+        private bool AnyMovementOrAttackControlPressed()
+        {
+            bool anyPressed = false;
+            Control[] controlsToCheck = { Control.MoveUpOnly, Control.MoveDownOnly, Control.MoveLeftOnly, Control.MoveRightOnly,
+                                            Control.MoveUp, Control.MoveDown, Control.MoveLeft, Control.MoveRight,
+                                            Control.MoveUpDown, Control.MoveLeftRight, Control.Aim, Control.Attack};
+
+            for (int i = 0; i < controlsToCheck.Length; i++)
+            {
+                if (Game.IsControlJustPressed(0, controlsToCheck[i]))
+                {
+                    anyPressed = true;
+                    break;
+                }
+            }
+
+            return anyPressed;
         }
 
         // Point function
