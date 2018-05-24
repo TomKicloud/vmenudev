@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using Newtonsoft.Json;
+using vMenuClient.Models.Enums;
 
 namespace vMenuClient
 {
@@ -17,6 +18,22 @@ namespace vMenuClient
 
         #region Public variables.
         #region PlayerOptions
+        public static EPlayerBlipDisplayType PlayerBlipDisplayType
+        {
+            get {
+                int val = GetSettingsInt("playerBlips");
+                if (val < 1 || val > 3) return EPlayerBlipDisplayType.Hidden;
+                else return (EPlayerBlipDisplayType)val;
+            }
+            set { SetSavedSettingsInt("playerBlips", (int)value); }
+        }
+
+        public static bool PlayerOverheadNames
+        {
+            get { return GetSettingsBool("playerOverheadNames"); }
+            set { SetSavedSettingsBool("playerOverheadNames", value); }
+        }
+
         public static bool PlayerGodMode
         {
             get { return GetSettingsBool("playerGodMode"); }
@@ -258,6 +275,32 @@ namespace vMenuClient
         }
 
         private static void SetSavedSettingsFloat(string kvpString, float newValue)
+        {
+            SetResourceKvpFloat(SETTINGS_PREFIX + kvpString, newValue);
+        }
+
+        private static int GetSettingsInt(string kvpString)
+        {
+            int savedValue = GetResourceKvpInt(SETTINGS_PREFIX + kvpString);
+            if (savedValue.ToString() != null)
+            {
+                if (savedValue.GetType() == typeof(int))
+                {
+                    return savedValue;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                SetSavedSettingsFloat(SETTINGS_PREFIX + kvpString, -1);
+                return -1;
+            }
+        }
+
+        private static void SetSavedSettingsInt(string kvpString, int newValue)
         {
             SetResourceKvpFloat(SETTINGS_PREFIX + kvpString, newValue);
         }

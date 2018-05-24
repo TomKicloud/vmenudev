@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using NativeUI;
+using vMenuClient.Models.Enums;
 
 namespace vMenuClient
 {
@@ -18,6 +19,8 @@ namespace vMenuClient
         private static CommonFunctions cf = MainMenu.Cf;
 
         // Public variables (getters only), return the private variables.
+        public EPlayerBlipDisplayType PlayerBlipDisplayType { get; private set; } = UserDefaults.PlayerBlipDisplayType;
+        public bool PlayerOverheadNames { get; private set; } = UserDefaults.PlayerOverheadNames;
         public bool PlayerGodMode { get; private set; } = UserDefaults.PlayerGodMode;
         public bool PlayerInvisible { get; private set; } = false;
         public bool PlayerStamina { get; private set; } = UserDefaults.UnlimitedStamina;
@@ -45,6 +48,7 @@ namespace vMenuClient
             };
 
             // Create all checkboxes.
+            UIMenuCheckboxItem playerGamerTags = new UIMenuCheckboxItem("Player Overhead Names", PlayerOverheadNames, "Shows/hides nametags above other players");
             UIMenuCheckboxItem playerGodModeCheckbox = new UIMenuCheckboxItem("Godmode", PlayerGodMode, "Makes you invincible.");
             UIMenuCheckboxItem invisibleCheckbox = new UIMenuCheckboxItem("Invisible", PlayerInvisible, "Makes you invisible to yourself and others.");
             UIMenuCheckboxItem unlimitedStaminaCheckbox = new UIMenuCheckboxItem("Unlimited Stamina", PlayerStamina, "Allows you to run forever without slowing down or taking damage.");
@@ -67,10 +71,25 @@ namespace vMenuClient
             // Scenarios (list can be found in the PedScenarios class)
             UIMenuListItem playerScenarios = new UIMenuListItem("Player Scenarios", PedScenarios.Scenarios, 0, "Select a scenario and hit enter to start it. Selecting another scenario will override the current scenario. If you're already playing the selected scenario, selecting it again will stop the scenario.");
             UIMenuItem stopScenario = new UIMenuItem("Force Stop Scenario", "This will force a playing scenario to stop immediately, without waiting for it to finish it's 'stopping' animation.");
+
+            // Player Blips
+            List<dynamic> playerBlipsList = new List<dynamic> { "Disabled", "Enabled", "Pause Menu Only" };
+            UIMenuListItem playerBlips = new UIMenuListItem("Player Blips", playerBlipsList, 0, "Enable/disable player blips on either the minimap and pause menu, or pause menu only.~n~Press Enter to save your selection.");
+            
             #endregion
 
             #region add items to menu based on permissions
             // Add all checkboxes to the menu. (keeping permissions in mind)
+            if (cf.IsAllowed(Permission.POBlips))
+            {
+                menu.AddItem(playerBlips);
+            }
+
+            if (cf.IsAllowed(Permission.POPlayerOverheadNames))
+            {
+                menu.AddItem(playerGamerTags);
+            }
+
             if (cf.IsAllowed(Permission.POGod))
             {
                 menu.AddItem(playerGodModeCheckbox);
@@ -135,6 +154,11 @@ namespace vMenuClient
                 {
                     PlayerGodMode = _checked;
                 }
+                // Player Overhead Names toggled
+                else if (item == playerGamerTags)
+                {
+                    PlayerOverheadNames = _checked;
+                }
                 // Invisibility toggled.
                 else if (item == invisibleCheckbox)
                 {
@@ -194,6 +218,12 @@ namespace vMenuClient
                 {
                     SetPlayerWantedLevel(PlayerId(), index, false);
                     SetPlayerWantedLevelNow(PlayerId(), false);
+                }
+                // Player Blips
+                else if (listItem == playerBlips)
+                {
+                    int option = index + 1;
+                    PlayerBlipDisplayType = (EPlayerBlipDisplayType)option;
                 }
                 // Player options (healing, cleaning, armor, dry/wet, etc)
                 else if (listItem == playerFunctions)

@@ -9,6 +9,7 @@ using static CitizenFX.Core.Native.API;
 using NativeUI;
 using System.Dynamic;
 using CitizenFX.Core.Native;
+using vMenuClient.Models.Enums;
 
 namespace vMenuClient
 {
@@ -111,6 +112,7 @@ namespace vMenuClient
                 Tick += ProcessMainButtons;
                 Tick += ProcessDirectionalButtons;
                 Tick += ProcessActiveScenario;
+                Tick += ProcessBlipsAndGamerTags;
             }
 
         }
@@ -574,6 +576,56 @@ namespace vMenuClient
                     // If no active scenario, wait half a second before checking again
                     await Delay(500);
                 }
+            }
+        }
+
+        private async Task ProcessBlipsAndGamerTags()
+        {
+            if (!firstTick)
+            {
+                PlayerList pl = new PlayerList();
+
+                foreach (Player p in pl)
+                {
+                    // Process blip for player
+                    int blip = API.GetBlipFromEntity(p.Character.Handle);
+
+                    if (API.DoesBlipExist(blip))
+                    {
+                        if (PlayerOptionsMenu.PlayerBlipDisplayType == EPlayerBlipDisplayType.Hidden)
+                        {
+                            API.SetBlipShowCone(blip, false);
+                            API.SetBlipDisplay(blip, (int)EPlayerBlipDisplayType.Hidden);
+                        }
+                        else
+                        {
+                            API.SetBlipDisplay(blip, (int)PlayerOptionsMenu.PlayerBlipDisplayType);
+                        }
+                    }
+
+                    // Process gamer tag for player
+                    int gamerTagId = 0;
+                    if (p.Handle == Game.Player.Handle)
+                    {
+                        // Remove gamer tag for local player
+                        API.RemoveMpGamerTag(gamerTagId);
+                    }
+                    else
+                    {
+                        Vector3 self = Game.Player.Character.Position;
+                        Vector3 target = p.Character.Position;
+
+                        gamerTagId = API.CreateMpGamerTag(p.Character.Handle, p.Name, false, false, "", 0);
+                        
+                        if (PlayerOptionsMenu.PlayerOverheadNames == false || Vector3.Distance(self, target) >= 50f)
+                        {
+                            API.RemoveMpGamerTag(gamerTagId);
+                        }
+                    }
+                }
+
+                // Can change this to "await Delay(100);" (or any number greater than zero) if this doesn't need to run every tick, but I'm not sure if it does or not
+                await Task.FromResult(0);
             }
         }
 

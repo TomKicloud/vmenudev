@@ -42,6 +42,8 @@ namespace vMenuClient
         POFunctions,
         POFreeze,
         POScenarios,
+        POBlips,
+        POPlayerOverheadNames,
 
         // Vehicle Options
         VOMenu,
