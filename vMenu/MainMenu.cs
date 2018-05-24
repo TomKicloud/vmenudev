@@ -602,6 +602,27 @@ namespace vMenuClient
                             API.SetBlipDisplay(blip, (int)PlayerOptionsMenu.PlayerBlipDisplayType);
                         }
                     }
+                    else
+                    {
+                        if (p.Handle != Game.Player.Handle)
+                        {
+                            int newBlip = API.AddBlipForEntity(p.Character.Handle);
+                            API.SetBlipNameToPlayerName(newBlip, p.Handle);
+                            API.SetBlipColour(newBlip, 0);
+                            API.SetBlipCategory(newBlip, 2);
+                            /*
+                             * 1 = No Text on blip or Distance
+                               2 = Text on blip
+                               3 = No text, just distance
+                               4+ No Text on blip or distance
+                             */
+
+                            // Uncomment this to make blips shrink when they go off the minimap (distance based?)
+                            // API.SetBlipShrink(newBlip, true);
+
+                            API.SetBlipScale(newBlip, 0.9f);
+                        }
+                    }
 
                     // Process gamer tag for player
                     int gamerTagId = 0;

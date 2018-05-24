@@ -80,7 +80,7 @@ namespace vMenuClient
 
             #region add items to menu based on permissions
             // Add all checkboxes to the menu. (keeping permissions in mind)
-            if (cf.IsAllowed(Permission.POBlips))
+            if (cf.IsAllowed(Permission.POPlayerBlips))
             {
                 menu.AddItem(playerBlips);
             }
