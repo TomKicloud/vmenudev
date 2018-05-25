@@ -742,6 +742,8 @@ namespace vMenuClient
                 PreviouslyOwnedByPlayer = true,
                 IsPersistent = true
             };
+            
+            SetEntityAsMissionEntity(vehicle.Handle,true,true);
 
             Log($"New vehicle, hash:{vehicleHash}, handle:{vehicle.Handle}, force-re-save-name:{(saveName ?? "NONE")}, created at x:{pos.X} y:{pos.Y} z:{(pos.Z + 1f)} " +
                 $"heading:{heading}");
