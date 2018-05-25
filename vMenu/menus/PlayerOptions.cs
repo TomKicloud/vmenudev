@@ -75,7 +75,7 @@ namespace vMenuClient
             // Player Blips
             List<dynamic> playerBlipsList = new List<dynamic> { "Disabled", "Enabled", "Pause Menu Only" };
             UIMenuListItem playerBlips = new UIMenuListItem("Player Blips", playerBlipsList, 0, "Enable/disable player blips on either the minimap and pause menu, or pause menu only.~n~Press Enter to save your selection.");
-            
+
             #endregion
 
             #region add items to menu based on permissions
@@ -84,10 +84,20 @@ namespace vMenuClient
             {
                 menu.AddItem(playerBlips);
             }
+            else
+            {
+                // If no permissions, explicitly set blips to hidden, just for safety/OCD
+                PlayerBlipDisplayType = EPlayerBlipDisplayType.Hidden;
+            }
 
             if (cf.IsAllowed(Permission.POPlayerOverheadNames))
             {
                 menu.AddItem(playerGamerTags);
+            }
+            else
+            {
+                // If no permissions, explicitly set gamer tags to hidden, just for safety/OCD
+                PlayerOverheadNames = false;
             }
 
             if (cf.IsAllowed(Permission.POGod))
