@@ -85,6 +85,8 @@ namespace vMenuServer
             "POFunctions",
             "POFreeze",
             "POScenarios",
+            "POPlayerBlips",
+            "POPlayerOverheadNames",
 
             // Vehicle Options
             "VOMenu",
