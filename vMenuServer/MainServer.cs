@@ -419,12 +419,21 @@ namespace vMenuServer
         private async Task WeatherLoop()
         {
             await Delay(5000);
+
+            int minutesToWait = 30;
+
             if (dynamicWeather)
             {
                 dynamicWeatherTimeLeft -= 10;
                 if (dynamicWeatherTimeLeft < 10)
                 {
-                    dynamicWeatherTimeLeft = 5 * 12 * 10;
+                    /* Note by Stealth
+                     * 
+                     * This formula is complicated AF, but I don't want to mess with it.
+                     * The "time left" doesn't use real milliseconds...it subtracts 10 units every 5 seconds, or 120 every minute.
+                     */
+
+                    dynamicWeatherTimeLeft = minutesToWait * 12 * 10;
                     RefreshWeather();
                     if (DebugMode)
                     {
@@ -436,8 +445,11 @@ namespace vMenuServer
             }
             else
             {
-                dynamicWeatherTimeLeft = 5 * 12 * 10;
+                // I'm curious as to why this is here, but I think it's to account for admins toggling dynamic weather on and off at random times
+                // In other words, if dynamic is off for a while, the timer should stay at the max so the weather doesn't just change the moment you turn dynamic back on
+                dynamicWeatherTimeLeft = minutesToWait * 12 * 10;
             }
+
             TriggerClientEvent("vMenu:SetWeather", currentWeather, blackout, dynamicWeather);
         }
 
