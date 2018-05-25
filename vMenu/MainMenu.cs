@@ -188,7 +188,15 @@ namespace vMenuClient
                     {
                         // Wait for the next frame to make sure the "cinematic camera" button doesn't get "re-enabled" before the menu gets closed.
                         await Delay(10);
-                        currentMenu.GoBack();
+                        
+                        if (currentMenu == Menu && Menu.Visible)
+                        {
+                            Mp.CloseAllMenus();
+                        }
+                        else
+                        {
+                            currentMenu.GoBack();
+                        }
                     }
                 }
             }
