@@ -7,6 +7,7 @@ using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using NativeUI;
 using Newtonsoft.Json;
+using CitizenFX.Core.Native;
 
 namespace vMenuClient
 {
@@ -2155,10 +2156,13 @@ namespace vMenuClient
             if (IsPedModel(PlayerPedId(), (uint)GetHashKey("mp_f_freemode_01")) || IsPedModel(PlayerPedId(), (uint)GetHashKey("mp_m_freemode_01")))
             {
                 bool isPedMale = IsPedModel(PlayerPedId(), (uint)GetHashKey("mp_m_freemode_01"));
+
                 ClearPedAlternateMovementAnim(PlayerPedId(), 0, 1f);
                 ClearPedAlternateMovementAnim(PlayerPedId(), 1, 1f);
                 ClearPedAlternateMovementAnim(PlayerPedId(), 2, 1f);
                 ClearPedAlternateWalkAnim(PlayerPedId(), 1f);
+                API.ResetPedMovementClipset(Game.PlayerPed.Handle, 1.0f);
+
                 string animDict = null;
                 if (walkingStyle == "Injured")
                 {
@@ -2206,9 +2210,11 @@ namespace vMenuClient
                             await Delay(10);
                         }
                     }
+                    
                     SetPedAlternateMovementAnim(PlayerPedId(), 0, animDict, "idle", 1f, true);
                     SetPedAlternateMovementAnim(PlayerPedId(), 1, animDict, "walk", 1f, true);
                     SetPedAlternateMovementAnim(PlayerPedId(), 2, animDict, "run", 1f, true);
+                    API.SetPedMovementClipset(Game.PlayerPed.Handle, animDict, 1.0f);
                 }
                 else if (walkingStyle != "Normal")
                 {
