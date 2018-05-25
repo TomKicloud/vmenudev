@@ -706,8 +706,8 @@ namespace vMenuClient
                     else
                     {
                         // Set the vehicle to be no longer needed. This will make the game engine decide when it should be removed (when all players get too far away).
-                        previousVehicle.IsPersistent = false;
-                        previousVehicle.MarkAsNoLongerNeeded();
+                        //previousVehicle.IsPersistent = false;
+                        //previousVehicle.MarkAsNoLongerNeeded();
                     }
                     previousVehicle = null;
                 }
