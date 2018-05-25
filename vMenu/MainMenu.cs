@@ -544,11 +544,6 @@ namespace vMenuClient
                 }
             }
 
-            if (Game.IsControlJustPressed(0, Control.PhoneCancel))
-            {
-                Mp.CloseAllMenus();
-            }
-
             // Open doj menu if button is selected
             if (dojMenu)
             {
