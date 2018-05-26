@@ -231,7 +231,6 @@ namespace vMenuClient
             {
                 if (item == walkingStyle)
                 {
-                    Subtitle.Custom("Ped is: " + IsPedMale(PlayerPedId()));
                     cf.SetWalkingStyle(walkstyles[index].ToString());
                 }
                 else
