@@ -25,6 +25,7 @@ namespace vMenuClient
 
         private bool firstTick = true;
         private bool dojMenu = false;
+        private bool pointing = false;
         private static bool permissionsSetupDone = false;
         private static bool optionsSetupDone = false;
         public static bool addonCarsLoaded = false;
@@ -563,6 +564,10 @@ namespace vMenuClient
                 TriggerEvent("doj_menu:toggleMenu");
             }
 
+            if (Game.IsControlJustReleased(0, Control.SpecialAbilitySecondary) && !API.IsPedInAnyVehicle(Game.PlayerPed.Handle, true))
+            {
+                Point();
+            }
         }
 
         private async Task ProcessActiveScenario()
@@ -675,22 +680,39 @@ namespace vMenuClient
             return anyPressed;
         }
 
-        // Point function
-        public void point()
+        #region Point Function
+
+        public async void Point()
         {
+            const string animDict = "anim@mp_point";
+            const string animSet = "task_mp_pointing";
 
-            if (IsControlJustPressed(0, 29))
+            pointing = !pointing;
+
+            if (!pointing)
             {
+                API.RequestAnimDict(animDict);
 
-                API.TaskPlayAnim(API.GetPlayerPed(-1), "anim@mp_point", "task_mp_pointing", (float)0.5, 0, 24, 0, 0, false, false, false);
-
-                if (IsControlJustPressed(0, 29))
+                while (!API.HasAnimDictLoaded(animDict))
                 {
-                    API.ClearPedTasks(API.GetPlayerPed(-1));
-                    API.ClearPedSecondaryTask(API.GetPlayerPed(-1));
+                    await Delay(10);
                 }
+
+                API.SetPedCurrentWeaponVisible(Game.PlayerPed.Handle, false, true, true, true);
+                
+                // Make the client point.
+                API.ClearPedTasks(API.GetPlayerPed(-1));
+                Function.Call(Hash._TASK_MOVE_NETWORK, Game.PlayerPed, animSet, 0.5f, false, animDict, 24);
+            }
+            else
+            {
+                // Stop making the client point.
+                API.ClearPedTasks(API.GetPlayerPed(-1));
+
+                API.SetPedCurrentWeaponVisible(Game.PlayerPed.Handle, true, false, true, true);
             }
         }
+        #endregion
 
         #region Add Menu Function
         /// <summary>
