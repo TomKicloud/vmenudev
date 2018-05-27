@@ -682,6 +682,44 @@ namespace vMenuClient
 
         #region Point Function
 
+        /*if Citizen.InvokeNative(0x921CE12C489C4C41, PlayerPedId()) then
+            if not IsPedOnFoot(PlayerPedId()) then
+                stopPointing()
+            else
+                local ped = GetPlayerPed(-1)
+                local camPitch = GetGameplayCamRelativePitch()
+                if camPitch < -70.0 then
+                    camPitch = -70.0
+                elseif camPitch > 42.0 then
+                    camPitch = 42.0
+                end
+                camPitch = (camPitch + 70.0) / 112.0
+
+                local camHeading = GetGameplayCamRelativeHeading()
+                local cosCamHeading = Cos(camHeading)
+                local sinCamHeading = Sin(camHeading)
+                if camHeading < -180.0 then
+                    camHeading = -180.0
+                elseif camHeading > 180.0 then
+                    camHeading = 180.0
+                end
+                camHeading = (camHeading + 180.0) / 360.0
+
+                local blocked = 0
+                local nn = 0
+
+                local coords = GetOffsetFromEntityInWorldCoords(ped, (cosCamHeading * -0.2) - (sinCamHeading * (0.4 * camHeading + 0.3)), (sinCamHeading * -0.2) + (cosCamHeading * (0.4 * camHeading + 0.3)), 0.6)
+                local ray = Cast_3dRayPointToPoint(coords.x, coords.y, coords.z - 0.2, coords.x, coords.y, coords.z + 0.2, 0.4, 95, ped, 7);
+                nn,blocked,coords,coords = GetRaycastResult(ray)
+
+                Citizen.InvokeNative(0xD5BB4025AE449A4E, ped, "Pitch", camPitch)
+                Citizen.InvokeNative(0xD5BB4025AE449A4E, ped, "Heading", camHeading * -1.0 + 1.0)
+                Citizen.InvokeNative(0xB0A6CFD2C69C1088, ped, "isBlocked", blocked)
+                Citizen.InvokeNative(0xB0A6CFD2C69C1088, ped, "isFirstPerson", Citizen.InvokeNative(0xEE778F8C7E1142E2, Citizen.InvokeNative(0x19CAFA3C87F7C2FF)) == 4)
+
+            end
+        end*/
+
         public async void Point()
         {
             const string animDict = "anim@mp_point";
@@ -704,6 +742,55 @@ namespace vMenuClient
                 API.SetPedConfigFlag(API.GetPlayerPed(-1), 36, true);
                 API.TaskMoveNetwork(API.GetPlayerPed(-1), animSet, 0.5f, false, animDict, 24);
                 API.RemoveAnimDict(animDict);
+
+                while (!pointing)
+                {
+                    float camPitch = API.GetGameplayCamRelativePitch();
+
+                    if (camPitch < -70.0f)
+                    {
+                        camPitch = -70.0f;
+                    }
+                    else if (camPitch > 42.0f)
+                    {
+                        camPitch = 42.0f;
+                    }
+
+                    camPitch = (camPitch + 70.0f) / 112.0f;
+
+                    float camHeading = GetGameplayCamRelativeHeading();
+                    float cosCamHeading = Cos(camHeading);
+                    float sinCamHeading = Sin(camHeading);
+
+                    if (camHeading < -180.0)
+                    {
+                        camHeading = -180.0f;
+                    }
+                    else if (camHeading > 180.0f)
+                    {
+                        camHeading = 180.0f;
+                    }
+
+                    camHeading = (camHeading + 180.0f) / 360.0f;
+
+                    bool blocked = false;
+                    bool firstPerson = API.IsFirstPersonAimCamActive();
+                    int nn = 0;
+
+                    Vector3 coords = GetOffsetFromEntityInWorldCoords(API.GetPlayerPed(-1),
+                        (cosCamHeading * -0.2f) - (sinCamHeading * (0.4f * camHeading + 0.3f)),
+                        (sinCamHeading * -0.2f) + (cosCamHeading * (0.4f * camHeading + 0.3f)), 0.6f);
+                    int ray = Cast_3dRayPointToPoint(coords.X, coords.Y, coords.Z - 0.2f, coords.X, coords.Y, coords.Z + 0.2f, 0.4f, 95, API.GetPlayerPed(-1), 7);
+                    API.GetRaycastResult(ray, ref blocked, ref coords, ref coords, ref nn);
+                    //nn,blocked,coords,coords = GetRaycastResult(ray)
+                    
+                    Function.Call((Hash)0xD5BB4025AE449A4E, Game.PlayerPed, "Pitch", camPitch);
+                    Function.Call((Hash)0xD5BB4025AE449A4E, Game.PlayerPed, "Heading", camHeading * -1.0f + 1.0f);
+                    Function.Call((Hash) 0xB0A6CFD2C69C1088, Game.PlayerPed, "isBlocked", blocked);
+                    Function.Call((Hash) 0xB0A6CFD2C69C1088, Game.PlayerPed, "isFirstPerson", firstPerson);
+
+                    await Delay(10);
+                }
             }
             else
             {
