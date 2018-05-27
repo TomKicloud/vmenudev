@@ -2184,11 +2184,11 @@ namespace vMenuClient
             }
             else if (walkingStyle == "Sexy")
             {
-                animDict = "move_f@sexy@a";
+                animDict = "move_f@sexy";
             }
             else if (walkingStyle == "Business")
             {
-                animDict = "move_f@business@a";
+                animDict = "move_m@business@a";
             }
             else if (walkingStyle == "Drunk")
             {
