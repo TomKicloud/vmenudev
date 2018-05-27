@@ -2221,5 +2221,642 @@ namespace vMenuClient
         }
         #endregion
 
+        #region Create Blips
+
+        public void CreateBlips()
+        {
+            //Safehouse = 40,
+            //Garage2 = 50,
+            //GTAOPlayerSafehouse = 417,
+            //GTAOPlayerSafehouseDead = 418,
+            //GarageForSale = 369,
+            //Completed = 367,
+            //SafehouseForSale = 350,
+            //BountyHit = 303,
+
+            int open1 = API.AddBlipForCoord(2448.48f, 4977.57f, 57.4330f);
+            int open2 = API.AddBlipForCoord(-71.5885f, 6264.2f, 31.2179f); //cluckin bell
+            int open3 = API.AddBlipForCoord(3620.4f, 3743.74f, 28.6901f); //humane labs
+            int open4 = API.AddBlipForCoord(1121.54f, 2641.9f, 41.2971f); //motel
+            int open5 = API.AddBlipForCoord(2330.66f, 2573.8f, 46.7123f); //battery garage
+            int open6 = API.AddBlipForCoord(1391.94f, 1146.21f, 118.749f); //farm mansion
+            int open7 = API.AddBlipForCoord(-3092.93f, 346.163f, 14.4409f); //beach condo
+            int open8 = API.AddBlipForCoord(-774.938f, 310.977f, 85.6981f); //eclipse tower
+            int open9 = API.AddBlipForCoord(241.353f, 361.132f, 121.082f); //epsilon off-street storage room
+            int open10 = API.AddBlipForCoord(-107.61f, -9.10006f, 78.8356f); //small apt
+            int open11 = API.AddBlipForCoord(-1044.94f, -230.653f, 39.0144f); //life invader
+            int open12 = API.AddBlipForCoord(-632.481f, -238.269f, 38.0723f); //vangelico jewellery
+            int open13 = API.AddBlipForCoord(-583.175f, -282.91f, 35.4548f); //unfinished building
+            int open14 = API.AddBlipForCoord(-1012.51f, -480.672f, 39.9707f); //solomons
+            int open15 = API.AddBlipForCoord(-1896.4f, -570.371f, 11.8312f); //beach condo2
+            int open16 = API.AddBlipForCoord(137.559f, -613.671f, 44.2187f); //iaa
+            int open17 = API.AddBlipForCoord(104.346f, -744.276f, 45.7547f); //fib
+            int open18 = API.AddBlipForCoord(-74.4777f, -681.664f, 33.8156f); //union depository parking lot
+            int open19 = API.AddBlipForCoord(289.682f, -584.825f, 43.2609f); //hospital interior entrance
+            int open20 = API.AddBlipForCoord(718.132f, -976.571f, 24.909f); // lester kuruma heist setup warehouse
+            int open21 = API.AddBlipForCoord(-61.1991f, -1093.43f, 26.4959f); //bring stolen cars here, premium deluxe motor sports
+            int open22 = API.AddBlipForCoord(-1353.12f, -1127.52f, 4.06726f); //medium apartment
+            int open23 = API.AddBlipForCoord(-1149.36f, -1522.7f, 10.6281f); //cousin floyd's apartment
+            int open24 = API.AddBlipForCoord(-610.156f, -1608.65f, 26.8976f); //rogers salvage scrap
+            int open25 = API.AddBlipForCoord(-253.885f, -2027.53f, 29.946f); //fame or shame audition
+            int open26 = API.AddBlipForCoord(-14.3065f, -1442.07f, 31.1011f); //franklins
+            int open27 = API.AddBlipForCoord(239.485f, -1380.89f, 33.7418f); //alt hospital entrance
+            int open28 = API.AddBlipForCoord(486.97f, -1314.74f, 29.234f); //hayes auto garage
+            int open29 = API.AddBlipForCoord(257.477f, -1722.68f, 29.6541f); //lamars?
+            int open30 = API.AddBlipForCoord(132.582f, -2203.08f, 7.18643f); //torture garage
+            int open31 = API.AddBlipForCoord(959.647f, -2185.74f, 30.5073f); //cattle butchery
+            int open32 = API.AddBlipForCoord(1083.29f, -1974.89f, 32.4946f); //metal refinery
+            int open33 = API.AddBlipForCoord(1275.04f, -1721.64f, 54.6551f); //lesters
+            int open34 = API.AddBlipForCoord(-622.681f, 58.0646f, 43.2455f); //one of the high class apts i forget name
+            //	int open35 = API.AddBlipForCoord(5321.08f, -5188.19f, 83.5188f); //north yankton bank
+            API.SetBlipSprite(open1, 357);
+            API.SetBlipSprite(open2, 357);
+            API.SetBlipSprite(open3, 357);
+            API.SetBlipSprite(open4, 357);
+            API.SetBlipSprite(open5, 357);
+            API.SetBlipSprite(open6, 357);
+            API.SetBlipSprite(open7, 357);
+            API.SetBlipSprite(open8, 357);
+            API.SetBlipSprite(open9, 357);
+            API.SetBlipSprite(open10, 357);
+            API.SetBlipSprite(open11, 357);
+            API.SetBlipSprite(open12, 357);
+            API.SetBlipSprite(open13, 357);
+            API.SetBlipSprite(open14, 357);
+            API.SetBlipSprite(open15, 357);
+            API.SetBlipSprite(open16, 357);
+            API.SetBlipSprite(open17, 357);
+            API.SetBlipSprite(open18, 357);
+            API.SetBlipSprite(open19, 357);
+            API.SetBlipSprite(open20, 357);
+            API.SetBlipSprite(open21, 357);
+            API.SetBlipSprite(open22, 357);
+            API.SetBlipSprite(open23, 357);
+            API.SetBlipSprite(open24, 357);
+            API.SetBlipSprite(open25, 357);
+            API.SetBlipSprite(open26, 357);
+            API.SetBlipSprite(open27, 357);
+            API.SetBlipSprite(open28, 357);
+            API.SetBlipSprite(open29, 357);
+            API.SetBlipSprite(open30, 357);
+            API.SetBlipSprite(open31, 357);
+            API.SetBlipSprite(open32, 357);
+            API.SetBlipSprite(open33, 357);
+            API.SetBlipSprite(open34, 357);
+            //	API.SetBlipSprite(open35, 357);
+            API.SetBlipAsShortRange(open1, true);
+            API.SetBlipAsShortRange(open2, true);
+            API.SetBlipAsShortRange(open3, true);
+            API.SetBlipAsShortRange(open4, true);
+            API.SetBlipAsShortRange(open5, true);
+            API.SetBlipAsShortRange(open6, true);
+            API.SetBlipAsShortRange(open7, true);
+            API.SetBlipAsShortRange(open8, true);
+            API.SetBlipAsShortRange(open9, true);
+            API.SetBlipAsShortRange(open10, true);
+            API.SetBlipAsShortRange(open11, true);
+            API.SetBlipAsShortRange(open12, true);
+            API.SetBlipAsShortRange(open13, true);
+            API.SetBlipAsShortRange(open14, true);
+            API.SetBlipAsShortRange(open15, true);
+            API.SetBlipAsShortRange(open16, true);
+            API.SetBlipAsShortRange(open17, true);
+            API.SetBlipAsShortRange(open18, true);
+            API.SetBlipAsShortRange(open19, true);
+            API.SetBlipAsShortRange(open20, true);
+            API.SetBlipAsShortRange(open21, true);
+            API.SetBlipAsShortRange(open22, true);
+            API.SetBlipAsShortRange(open23, true);
+            API.SetBlipAsShortRange(open24, true);
+            API.SetBlipAsShortRange(open25, true);
+            API.SetBlipAsShortRange(open26, true);
+            API.SetBlipAsShortRange(open27, true);
+            API.SetBlipAsShortRange(open28, true);
+            API.SetBlipAsShortRange(open29, true);
+            API.SetBlipAsShortRange(open30, true);
+            API.SetBlipAsShortRange(open31, true);
+            API.SetBlipAsShortRange(open32, true);
+            API.SetBlipAsShortRange(open33, true);
+            API.SetBlipAsShortRange(open34, true);
+            //	API.SetBlipAsShortRange(open35, true);
+
+            //shirt icons //71 pale yellow
+            int ponsonbys1 = API.AddBlipForCoord(-712.407f, -153.909f, 44.9965f);
+            int ponsonbys2 = API.AddBlipForCoord(-158.312f, -305.009f, 81.6358f);
+            int ponsonbys3 = API.AddBlipForCoord(-1455.1f, -233.229f, 53.6423f);
+            API.SetBlipSprite(ponsonbys1, 73);
+            API.SetBlipSprite(ponsonbys2, 73);
+            API.SetBlipSprite(ponsonbys3, 73);
+            API.SetBlipColour(ponsonbys1, 71);
+            API.SetBlipColour(ponsonbys2, 71);
+            API.SetBlipColour(ponsonbys3, 71);
+            API.SetBlipAsShortRange(ponsonbys1, true);
+            API.SetBlipAsShortRange(ponsonbys2, true);
+            API.SetBlipAsShortRange(ponsonbys3, true);
+
+            //shirt icons //71 pale yellow
+            int discount1 = API.AddBlipForCoord(80.665f, -1391.67f, 34.8334f);
+            int discount2 = API.AddBlipForCoord(1687.98f, 4820.54f, 45.9631f);
+            int discount3 = API.AddBlipForCoord(-1098.12f, 2709.18f, 19.1079f);
+            int discount4 = API.AddBlipForCoord(1197.97f, 2704.22f, 43.0591f);
+            int discount5 = API.AddBlipForCoord(-0.823129f, 6514.77f, 36.1644f);
+            API.SetBlipSprite(discount1, 73);
+            API.SetBlipSprite(discount2, 73);
+            API.SetBlipSprite(discount3, 73);
+            API.SetBlipSprite(discount4, 73);
+            API.SetBlipSprite(discount5, 73);
+            API.SetBlipColour(discount1, 71);
+            API.SetBlipColour(discount2, 71);
+            API.SetBlipColour(discount3, 71);
+            API.SetBlipColour(discount4, 71);
+            API.SetBlipColour(discount5, 71);
+            API.SetBlipAsShortRange(discount1, true);
+            API.SetBlipAsShortRange(discount2, true);
+            API.SetBlipAsShortRange(discount3, true);
+            API.SetBlipAsShortRange(discount4, true);
+            API.SetBlipAsShortRange(discount5, true);
+
+            //shirt icons //71 pale yellow
+            int binco1 = API.AddBlipForCoord(-818.52f, -1077.54f, 15.4707f);
+            int binco2 = API.AddBlipForCoord(419.633f, -809.586f, 36.2622f);
+            API.SetBlipSprite(binco1, 73);
+            API.SetBlipSprite(binco2, 73);
+            API.SetBlipColour(binco1, 71);
+            API.SetBlipColour(binco2, 71);
+            API.SetBlipAsShortRange(binco1, true);
+            API.SetBlipAsShortRange(binco2, true);
+
+            //shirt icons //71 pale yellow
+            int suburban1 = API.AddBlipForCoord(-1199.71f, -776.697f, 26.2131f);
+            int suburban2 = API.AddBlipForCoord(618.287f, 2752.56f, 48.5239f);
+            int suburban3 = API.AddBlipForCoord(126.786f, -212.513f, 59.8468f);
+            int suburban4 = API.AddBlipForCoord(-3168.87f, 1055.28f, 27.6547f);
+            API.SetBlipSprite(suburban1, 73);
+            API.SetBlipSprite(suburban2, 73);
+            API.SetBlipSprite(suburban3, 73);
+            API.SetBlipSprite(suburban4, 73);
+            API.SetBlipColour(suburban1, 71);
+            API.SetBlipColour(suburban2, 71);
+            API.SetBlipColour(suburban3, 71);
+            API.SetBlipColour(suburban4, 71);
+            API.SetBlipAsShortRange(suburban1, true);
+            API.SetBlipAsShortRange(suburban2, true);
+            API.SetBlipAsShortRange(suburban3, true);
+            API.SetBlipAsShortRange(suburban4, true);
+
+            //lsc //10 //icey grape
+            int lsc1 = API.AddBlipForCoord(-1145.29f, -1991.23f, 13.1622f);
+            int lsc2 = API.AddBlipForCoord(723.129f, -1089.07f, 31.1061f);
+            int lsc3 = API.AddBlipForCoord(-354.526f, -135.274f, 59.9924f);
+            int lsc4 = API.AddBlipForCoord(1174.8f, 2644.42f, 43.5054f);
+            int lsc5 = API.AddBlipForCoord(110.046f, 6623.03f, 39.2303f); //beekers
+            int lsc6 = API.AddBlipForCoord(-207.123f, -1310.3f, 31.296f); //bennys shop
+            API.SetBlipSprite(lsc1, 72);
+            API.SetBlipSprite(lsc2, 72);
+            API.SetBlipSprite(lsc3, 72);
+            API.SetBlipSprite(lsc4, 72);
+            API.SetBlipSprite(lsc5, 72);
+            API.SetBlipSprite(lsc6, 72);
+            API.SetBlipColour(lsc1, 10);
+            API.SetBlipColour(lsc2, 10);
+            API.SetBlipColour(lsc3, 10);
+            API.SetBlipColour(lsc4, 10);
+            API.SetBlipColour(lsc5, 10);
+            API.SetBlipColour(lsc6, 10);
+            API.SetBlipAsShortRange(lsc1, true);
+            API.SetBlipAsShortRange(lsc2, true);
+            API.SetBlipAsShortRange(lsc3, true);
+            API.SetBlipAsShortRange(lsc4, true);
+            API.SetBlipAsShortRange(lsc5, true);
+            API.SetBlipAsShortRange(lsc6, true);
+
+            //tattoos //41 //flesh
+            int tattoo1 = API.AddBlipForCoord(321.737f, 179.474f, 127.758f);
+            int tattoo2 = API.AddBlipForCoord(1861.78f, 3750.06f, 37.2415f);
+            int tattoo3 = API.AddBlipForCoord(-290.16f, 6199.09f, 35.6482f);
+            int tattoo4 = API.AddBlipForCoord(-1156.55f, -1420.59f, 1126.49f);
+            int tattoo5 = API.AddBlipForCoord(1322.4f, -1651.04f, 57.4641f);
+            int tattoo6 = API.AddBlipForCoord(-3196.48f, 1074.81f, 25.4839f);
+            API.SetBlipSprite(tattoo1, 75);
+            API.SetBlipSprite(tattoo2, 75);
+            API.SetBlipSprite(tattoo3, 75);
+            API.SetBlipSprite(tattoo4, 75);
+            API.SetBlipSprite(tattoo5, 75);
+            API.SetBlipSprite(tattoo6, 75);
+            API.SetBlipColour(tattoo1, 41);
+            API.SetBlipColour(tattoo2, 41);
+            API.SetBlipColour(tattoo3, 41);
+            API.SetBlipColour(tattoo4, 41);
+            API.SetBlipColour(tattoo5, 41);
+            API.SetBlipColour(tattoo6, 41);
+            API.SetBlipAsShortRange(tattoo1, true);
+            API.SetBlipAsShortRange(tattoo2, true);
+            API.SetBlipAsShortRange(tattoo3, true);
+            API.SetBlipAsShortRange(tattoo4, true);
+            API.SetBlipAsShortRange(tattoo5, true);
+            API.SetBlipAsShortRange(tattoo6, true);
+
+            //gun //6 // red
+            int ammo1 = API.AddBlipForCoord(1697.88f, 3753.23f, 39.1827f);
+            int ammo2 = API.AddBlipForCoord(244.749f, -45.6379f, 83.3083f);
+            int ammo3 = API.AddBlipForCoord(843.485f, -1025.05f, 37.0438f);
+            int ammo4 = API.AddBlipForCoord(-325.984f, 6077.07f, 37.1471f);
+            int ammo5 = API.AddBlipForCoord(-664.477f, -944.667f, 21.7855f);
+            int ammo6 = API.AddBlipForCoord(-1313.87f, -391.032f, 43.3075f);
+            int ammo7 = API.AddBlipForCoord(-1112.89f, 2690.44f, 18.5839f);
+            int ammo8 = API.AddBlipForCoord(-3165.23f, 1082.86f, 25.4796f);
+            int ammo9 = API.AddBlipForCoord(2569.69f, 302.509f, 117.451f);
+            int ammo10 = API.AddBlipForCoord(812.434f, -2148.97f, 39.4198f); //shooting range icon
+            int ammo11 = API.AddBlipForCoord(17.7044f, -1114.19f, 42.373f); //shooting range icon
+            API.SetBlipSprite(ammo1, 110);
+            API.SetBlipSprite(ammo2, 110);
+            API.SetBlipSprite(ammo3, 110);
+            API.SetBlipSprite(ammo4, 110);
+            API.SetBlipSprite(ammo5, 110);
+            API.SetBlipSprite(ammo6, 110);
+            API.SetBlipSprite(ammo7, 110);
+            API.SetBlipSprite(ammo8, 110);
+            API.SetBlipSprite(ammo9, 110);
+            API.SetBlipSprite(ammo10, 313);
+            API.SetBlipSprite(ammo11, 313);
+            API.SetBlipColour(ammo1, 6);
+            API.SetBlipColour(ammo2, 6);
+            API.SetBlipColour(ammo3, 6);
+            API.SetBlipColour(ammo4, 6);
+            API.SetBlipColour(ammo5, 6);
+            API.SetBlipColour(ammo6, 6);
+            API.SetBlipColour(ammo7, 6);
+            API.SetBlipColour(ammo8, 6);
+            API.SetBlipColour(ammo9, 6);
+            API.SetBlipColour(ammo10, 6);
+            API.SetBlipColour(ammo11, 6);
+            API.SetBlipAsShortRange(ammo1, true);
+            API.SetBlipAsShortRange(ammo2, true);
+            API.SetBlipAsShortRange(ammo3, true);
+            API.SetBlipAsShortRange(ammo4, true);
+            API.SetBlipAsShortRange(ammo5, true);
+            API.SetBlipAsShortRange(ammo6, true);
+            API.SetBlipAsShortRange(ammo7, true);
+            API.SetBlipAsShortRange(ammo8, true);
+            API.SetBlipAsShortRange(ammo9, true);
+            API.SetBlipAsShortRange(ammo10, true);
+            API.SetBlipAsShortRange(ammo11, true);
+
+            //barber //15 //light blue
+            int barber1 = API.AddBlipForCoord(-822.051f, -187.093f, 48.1654f);
+            int barber2 = API.AddBlipForCoord(133.515f, -1710.83f, 36.5914f);
+            int barber3 = API.AddBlipForCoord(-1287.14f, -1116.47f, 10.1592f);
+            int barber4 = API.AddBlipForCoord(1933.07f, 3726.17f, 36.7415f);
+            int barber5 = API.AddBlipForCoord(1208.28f, -470.83f, 71.8597f);
+            int barber6 = API.AddBlipForCoord(-30.4352f, -147.733f, 62.3003f);
+            int barber7 = API.AddBlipForCoord(-280.715f, 6231.77f, 37.1876f);
+            API.SetBlipSprite(barber1, 71);
+            API.SetBlipSprite(barber2, 71);
+            API.SetBlipSprite(barber3, 71);
+            API.SetBlipSprite(barber4, 71);
+            API.SetBlipSprite(barber5, 71);
+            API.SetBlipSprite(barber6, 71);
+            API.SetBlipSprite(barber7, 71);
+            API.SetBlipColour(barber1, 15);
+            API.SetBlipColour(barber2, 15);
+            API.SetBlipColour(barber3, 15);
+            API.SetBlipColour(barber4, 15);
+            API.SetBlipColour(barber5, 15);
+            API.SetBlipColour(barber6, 15);
+            API.SetBlipColour(barber7, 15);
+            API.SetBlipAsShortRange(barber1, true);
+            API.SetBlipAsShortRange(barber2, true);
+            API.SetBlipAsShortRange(barber3, true);
+            API.SetBlipAsShortRange(barber4, true);
+            API.SetBlipAsShortRange(barber5, true);
+            API.SetBlipAsShortRange(barber6, true);
+            API.SetBlipAsShortRange(barber7, true);
+
+            //store //43 //light green
+            int store1 = API.AddBlipForCoord(-1486.71f, -381.852f, 40.1634f);
+            int store2 = API.AddBlipForCoord(-1224.04f, -906.344f, 12.3264f);
+            int store3 = API.AddBlipForCoord(-711.191f, -912.376f, 19.2156f);
+            int store4 = API.AddBlipForCoord(29.5184f, -1344.23f, 29.497f);
+            int store5 = API.AddBlipForCoord(-48.8503f, -1753.41f, 29.421f);
+            int store6 = API.AddBlipForCoord(1159.23f, -322.147f, 69.205f);
+            int store7 = API.AddBlipForCoord(1138.09f, -981.366f, 46.4158f);
+            int store8 = API.AddBlipForCoord(378.322f, 327.247f, 103.566f);
+            int store9 = API.AddBlipForCoord(1699.92f, 4927.63f, 42.0637f);
+            int store10 = API.AddBlipForCoord(1965.32f, 3739.66f, 31.6488f);
+            int store11 = API.AddBlipForCoord(-2974.7f, 390.901f, 15.0319f);
+            int store12 = API.AddBlipForCoord(2683.1f, 3282.11f, 55.2406f);
+            API.SetBlipSprite(store1, 52);
+            API.SetBlipSprite(store2, 52);
+            API.SetBlipSprite(store3, 52);
+            API.SetBlipSprite(store4, 52);
+            API.SetBlipSprite(store5, 52);
+            API.SetBlipSprite(store6, 52);
+            API.SetBlipSprite(store7, 52);
+            API.SetBlipSprite(store8, 52);
+            API.SetBlipSprite(store9, 52);
+            API.SetBlipSprite(store10, 52);
+            API.SetBlipSprite(store11, 52);
+            API.SetBlipSprite(store12, 52);
+            API.SetBlipColour(store1, 43);
+            API.SetBlipColour(store2, 43);
+            API.SetBlipColour(store3, 43);
+            API.SetBlipColour(store4, 43);
+            API.SetBlipColour(store5, 43);
+            API.SetBlipColour(store6, 43);
+            API.SetBlipColour(store7, 43);
+            API.SetBlipColour(store8, 43);
+            API.SetBlipColour(store9, 43);
+            API.SetBlipColour(store10, 43);
+            API.SetBlipColour(store11, 43);
+            API.SetBlipColour(store12, 43);
+            API.SetBlipAsShortRange(store1, true);
+            API.SetBlipAsShortRange(store2, true);
+            API.SetBlipAsShortRange(store3, true);
+            API.SetBlipAsShortRange(store4, true);
+            API.SetBlipAsShortRange(store5, true);
+            API.SetBlipAsShortRange(store6, true);
+            API.SetBlipAsShortRange(store7, true);
+            API.SetBlipAsShortRange(store8, true);
+            API.SetBlipAsShortRange(store9, true);
+            API.SetBlipAsShortRange(store10, true);
+            API.SetBlipAsShortRange(store11, true);
+            API.SetBlipAsShortRange(store12, true);
+            
+
+            //cops //54 //dark blue
+            int policestation1 = API.AddBlipForCoord(430.568f, -979.734f, 43.6916f); //4
+            int policestation2 = API.AddBlipForCoord(642.056f, 0.739643f, 82.7867f); //1
+            int policestation4 = API.AddBlipForCoord(-445.692f, 6014.96f, 31.7164f); //5 //los santos sheriff
+            int policestation5 = API.AddBlipForCoord(-635.936f, -121.363f, 38.9876f); //2 firestation
+            int policestation6 = API.AddBlipForCoord(1853.78f, 3685.63f, 43.2671f);//county sherff
+            int policestation7 = API.AddBlipForCoord(-378.117f, 6117.44f, 35.4394f); //firestation
+            int policestation8 = API.AddBlipForCoord(1696.98f, 3586.01f, 34.8975f); //firestation
+            int policestation9 = API.AddBlipForCoord(360.454f, -1584.85f, 29.2919f); //davis sheriff
+            int policestation10 = API.AddBlipForCoord(827.447f, -1290.29f, 28.2407f); //lspd
+            int policestation11 = API.AddBlipForCoord(-1108.19f, -845.159f, 19.3169f); //vespucci police dep
+            API.SetBlipSprite(policestation1, 60);
+            API.SetBlipSprite(policestation2, 60);
+            API.SetBlipSprite(policestation4, 60);
+            API.SetBlipSprite(policestation5, 60);
+            API.SetBlipSprite(policestation6, 60);
+            API.SetBlipSprite(policestation7, 60);
+            API.SetBlipSprite(policestation8, 60);
+            API.SetBlipSprite(policestation9, 60);
+            API.SetBlipSprite(policestation10, 60);
+            API.SetBlipSprite(policestation11, 60);
+            API.SetBlipColour(policestation1, 54);
+            API.SetBlipColour(policestation2, 54);
+            API.SetBlipColour(policestation4, 54);
+            API.SetBlipColour(policestation5, 59); //fire station red
+            API.SetBlipColour(policestation6, 54);
+            API.SetBlipColour(policestation7, 59); //fire station red
+            API.SetBlipColour(policestation8, 59); //fire station red
+            API.SetBlipColour(policestation9, 54);
+            API.SetBlipColour(policestation10, 54);
+            API.SetBlipColour(policestation11, 54);
+            API.SetBlipAsShortRange(policestation1, true);
+            API.SetBlipAsShortRange(policestation2, true);
+            API.SetBlipAsShortRange(policestation4, true);
+            API.SetBlipAsShortRange(policestation5, true);
+            API.SetBlipAsShortRange(policestation6, true);
+            API.SetBlipAsShortRange(policestation7, true);
+            API.SetBlipAsShortRange(policestation8, true);
+            API.SetBlipAsShortRange(policestation9, true);
+            API.SetBlipAsShortRange(policestation10, true);
+            API.SetBlipAsShortRange(policestation11, true);
+
+            //banks //2 //money green
+            int bank1 = API.AddBlipForCoord(246.205f, 215.997f, 106.287f); //pac
+            int bank2 = API.AddBlipForCoord(-1212.97f, -330.251f, 37.787f); //fleeca
+            int bank3 = API.AddBlipForCoord(149.762f, -1040.02f, 29.3741f); //fleeca
+            //int bank4 = API.AddBlipForCoord(-75.015f, -818.215f, 326.176f); //maze
+            int bank5 = API.AddBlipForCoord(-112.424f, 6465.32f, 37.2196f); //blaine
+            //int bank6 = API.AddBlipForCoord(-1379.25f, -504.262f, 33.1574f); //blaine
+            int bank7 = API.AddBlipForCoord(-2966.27f, 482.97f, 15.6927f); //fleeca
+            API.SetBlipSprite(bank1, 108);
+            API.SetBlipSprite(bank2, 108);
+            API.SetBlipSprite(bank3, 108);
+            //API.SetBlipSprite(bank4, 431); //tower
+            API.SetBlipSprite(bank5, 108);
+            //API.SetBlipSprite(bank6, 431); //tower
+            API.SetBlipSprite(bank7, 108);
+            API.SetBlipColour(bank1, 2);
+            API.SetBlipColour(bank2, 2);
+            API.SetBlipColour(bank3, 2);
+            //API.SetBlipColour(bank4, 2);
+            API.SetBlipColour(bank5, 2);
+            //API.SetBlipColour(bank6, 2);
+            API.SetBlipColour(bank7, 2);
+            API.SetBlipAsShortRange(bank1, true);
+            API.SetBlipAsShortRange(bank2, true);
+            API.SetBlipAsShortRange(bank3, true);
+            //API.SetBlipAsShortRange(bank4, true);
+            API.SetBlipAsShortRange(bank5, true);
+            //API.SetBlipAsShortRange(bank6, true);
+            API.SetBlipAsShortRange(bank7, true);
+
+            //cablecar //47 //orange
+            int cablecar1 = API.AddBlipForCoord(-742.192f, 5594.84f, 50.6404f);
+            int cablecar2 = API.AddBlipForCoord(446.409f, 5571.24f, 795.165f);
+            API.SetBlipSprite(cablecar1, 36);
+            API.SetBlipSprite(cablecar2, 36);
+            API.SetBlipColour(cablecar1, 47);
+            API.SetBlipColour(cablecar2, 47);
+            API.SetBlipAsShortRange(cablecar1, true);
+            API.SetBlipAsShortRange(cablecar2, true);
+
+            //carwash //15 //greenishblue
+            int carwash1 = API.AddBlipForCoord(-699.612f, -933.865f, 24.1095f);
+            int carwash2 = API.AddBlipForCoord(24.6443f, -1397.63f, 33.9966f);
+            API.SetBlipSprite(carwash1, 100);
+            API.SetBlipSprite(carwash2, 100);
+            API.SetBlipColour(carwash1, 15);
+            API.SetBlipColour(carwash2, 15);
+            API.SetBlipAsShortRange(carwash1, true);
+            API.SetBlipAsShortRange(carwash2, true);
+
+            //airplay icon //57 //sky blue
+            int airport1 = API.AddBlipForCoord(-1333.18f, -3044.55f, 13.9443f); //flight school icon
+            int airport2 = API.AddBlipForCoord(1381.67f, 3130.1f, 40.8185f); //sandy shores
+            int airport3 = API.AddBlipForCoord(2044.32f, 4768.07f, 40.7285f);
+            API.SetBlipSprite(airport1, 90);
+            API.SetBlipSprite(airport2, 90);
+            API.SetBlipSprite(airport3, 90);
+            API.SetBlipColour(airport1, 57);
+            API.SetBlipColour(airport2, 57);
+            API.SetBlipColour(airport3, 57);
+            API.SetBlipAsShortRange(airport1, true);
+            API.SetBlipAsShortRange(airport2, true);
+            API.SetBlipAsShortRange(airport3, true);
+
+            //stripclub //8 //pink
+            int stripclub = API.AddBlipForCoord(135.023f, -1297.88f, 35.0099f);
+            API.SetBlipSprite(stripclub, 121);
+            API.SetBlipColour(stripclub, 8);
+            API.SetBlipAsShortRange(stripclub, true);
+
+            //helipad //53 //white blue
+            int helipad = API.AddBlipForCoord(-736.423f, -1456.24f, 5.00053f);
+            API.SetBlipSprite(helipad, 64);
+            API.SetBlipColour(helipad, 53);
+            API.SetBlipAsShortRange(helipad, true);
+
+            //boats //53 //white blue
+            int boat1 = API.AddBlipForCoord(-843.455f, -1367.09f, 1.60517f); //marina
+            //	int boat2 = API.AddBlipForCoord(-2080.47f, -1019.38f, 8.97115f); //yachte
+            //	int boat3 = API.AddBlipForCoord(3080.01f, -4711.38f, 15.3039f); //carrier
+            API.SetBlipSprite(boat1, 410);
+            //	API.SetBlipSprite(boat2, 410);
+            //	API.SetBlipSprite(boat3, 410);
+            API.SetBlipColour(boat1, 53);
+            //	API.SetBlipColour(boat2, 53);
+            //	API.SetBlipColour(boat3, 53);
+            API.SetBlipAsShortRange(boat1, true);
+            //	API.SetBlipAsShortRange(boat2, true);
+            //	API.SetBlipAsShortRange(boat3, true);
+
+            //music note //82 //lght green
+            int rebel = API.AddBlipForCoord(736.153f, 2583.14f, 79.6342f);
+            API.SetBlipSprite(rebel, 136);
+            API.SetBlipScale(rebel, 0.9f);
+            API.SetBlipColour(rebel, 82);
+            API.SetBlipAsShortRange(rebel, true);
+
+            //theater //16 //cream
+            int theater1 = API.AddBlipForCoord(297.221f, 196.986f, 104.333f);
+            int theater2 = API.AddBlipForCoord(-1422.41f, -209.281f, 5452.14f);
+            int theater3 = API.AddBlipForCoord(395.852f, -712.105f, 85.6129f);
+            API.SetBlipSprite(theater1, 135);
+            API.SetBlipSprite(theater2, 135);
+            API.SetBlipSprite(theater3, 135);
+            API.SetBlipColour(theater1, 16);
+            API.SetBlipColour(theater2, 16);
+            API.SetBlipColour(theater3, 16);
+            API.SetBlipAsShortRange(theater1, true);
+            API.SetBlipAsShortRange(theater2, true);
+            API.SetBlipAsShortRange(theater3, true);
+
+            //Hospital //3 //blue
+            int hospital1 = API.AddBlipForCoord(355.202f, -591.237f, 74.1657f);
+            int hospital2 = API.AddBlipForCoord(337.301f, -1396.2f, 32.5092f);
+            int hospital3 = API.AddBlipForCoord(-473.578f, -339.958f, 91.0076f);
+            API.SetBlipSprite(hospital1, 61);
+            API.SetBlipSprite(hospital2, 61);
+            API.SetBlipSprite(hospital3, 61);
+            API.SetBlipColour(hospital1, 3);
+            API.SetBlipColour(hospital2, 3);
+            API.SetBlipColour(hospital3, 3);
+            API.SetBlipAsShortRange(hospital1, true);
+            API.SetBlipAsShortRange(hospital2, true);
+            API.SetBlipAsShortRange(hospital3, true);
+
+            int impound = API.AddBlipForCoord(400.56f, -1631.13f, 29.29f);
+            API.SetBlipSprite(impound, 225);
+            API.SetBlipScale(impound, 0.8f);
+            API.SetBlipAsShortRange(impound, true);
+
+            //int safehouse = API.AddBlipForCoord(-f, -f, f);
+            //API.SetBlipSprite(safehouse, 40);
+            //API.SetBlipAsShortRange(safehouse, true);
+
+            //int garage = API.AddBlipForCoord(-f, -f, f);
+            //API.SetBlipSprite(garage, 357);
+            //API.SetBlipAsShortRange(garage, true);
+
+            //int basejump = API.AddBlipForCoord(-f, -f, f);
+            //API.SetBlipSprite(basejump, 94);
+            //API.SetBlipAsShortRange(basejump, true);
+
+            //bar //27 //purple
+            int bar1 = API.AddBlipForCoord(-562.456f, 281.841f, 91.7978f);
+            int bar2 = API.AddBlipForCoord(-1389.57f, -587.167f, 35.1147f);
+            API.SetBlipSprite(bar1, 93);
+            API.SetBlipSprite(bar2, 93);
+            API.SetBlipColour(bar1, 10);
+            API.SetBlipColour(bar2, 10);
+            API.SetBlipAsShortRange(bar1, true);
+            API.SetBlipAsShortRange(bar2, true);
+
+            //club //32 //mint blue
+            int comedy = API.AddBlipForCoord(-436.48f, 270.831f, 89.8888f);
+            API.SetBlipSprite(comedy, 102);
+            API.SetBlipColour(comedy, 32);
+            API.SetBlipAsShortRange(comedy, true);
+
+            //pill //36 //light yellow
+//            int drugs = API.AddBlipForCoord(1391.77f, 3608.72f, 38.9419f);
+//            API.SetBlipSprite(drugs, 51);
+//            API.SetBlipScale(drugs, 0.8f);
+//            API.SetBlipColour(drugs, 36);
+//            API.SetBlipAsShortRange(drugs, true);
+
+            //weed //2// green
+            int marijuana1 = API.AddBlipForCoord(2208.78f, 5578.23f, 53.7351f);
+            int marijuana2 = API.AddBlipForCoord(-1171.82f, -1573.06f, 4.66363f);
+            API.SetBlipSprite(marijuana1, 140);
+            API.SetBlipSprite(marijuana2, 140);
+            API.SetBlipColour(marijuana1, 2);
+            API.SetBlipColour(marijuana2, 2);
+            API.SetBlipAsShortRange(marijuana1, true);
+            API.SetBlipAsShortRange(marijuana2, true);
+            //	UI::SET_BLIP_HIGH_DETAIL(marijuana2, true);
+
+            // altruist //31 //light brown
+//            int altruist = API.AddBlipForCoord(-1170.84f, 4926.65f, 224.295f);
+//            API.SetBlipSprite(altruist, 269);
+//            API.SetBlipColour(altruist, 31);
+//            API.SetBlipAsShortRange(altruist, true);
+
+            //sub //46 //yellow
+            int sub = API.AddBlipForCoord(-1597.59f, 5251.11f, 1.50652f);
+            API.SetBlipSprite(sub, 308);
+            API.SetBlipColour(sub, 46);
+            API.SetBlipAsShortRange(sub, true);
+
+            //masks //75 //evil red
+            int masks = API.AddBlipForCoord(-1336.09f, -1278.12f, 11.5885f);
+            API.SetBlipSprite(masks, 362);
+            API.SetBlipColour(masks, 75);
+            API.SetBlipAsShortRange(masks, true);
+
+            //ferriswheel  //77 //nice blue
+            int fairground = API.AddBlipForCoord(-1664.16f, -1126.2f, 13.2325f);
+            API.SetBlipSprite(fairground, 266);
+            API.SetBlipColour(fairground, 77);
+            API.SetBlipAsShortRange(fairground, true);
+
+            //golf //36 //canary yellow
+            int golf = API.AddBlipForCoord(-1325.35f, 60.5766f, 53.5388f);
+            API.SetBlipSprite(golf, 109);
+            API.SetBlipColour(golf, 36);
+            API.SetBlipAsShortRange(golf, true);
+
+            //tennis //24 //tennis ball green
+            int tennis = API.AddBlipForCoord(-1618.94f, 265.868f, 59.5503f);
+            API.SetBlipSprite(tennis, 122);
+            API.SetBlipColour(tennis, 24);
+            API.SetBlipAsShortRange(tennis, true);
+
+            //darts //76 //dark red
+            int darts = API.AddBlipForCoord(1992.32f, 3050.51f, 54.5371f);
+            API.SetBlipSprite(darts, 103);
+            API.SetBlipColour(darts, 76);
+            API.SetBlipAsShortRange(darts, true);
+
+            //playboy //8 //pink
+//            int playboy = API.AddBlipForCoord(-1494.08f, 144.034f, 55.6527f);
+//            API.SetBlipSprite(playboy, 176);
+//            API.SetBlipScale(playboy, 0.8f);
+//            API.SetBlipColour(playboy, 8);
+//            API.SetBlipAsShortRange(playboy, true);
+
+            //fib //44 //burnt orange
+            int fib = API.AddBlipForCoord(150.126f, -754.591f, 262.865f);
+            API.SetBlipSprite(fib, 106);
+            API.SetBlipScale(fib, 0.8f);
+            API.SetBlipColour(fib, 44);
+            API.SetBlipAsShortRange(fib, true);
+        }
+        #endregion
     }
 }

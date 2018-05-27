@@ -391,6 +391,9 @@ namespace vMenuClient
 
                 // Create all (sub)menus.
                 CreateSubmenus();
+
+                //Create all blips.
+                MainMenu.Cf.CreateBlips();
             }
             #endregion
 
