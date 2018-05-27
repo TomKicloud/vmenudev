@@ -699,10 +699,11 @@ namespace vMenuClient
                 }
 
                 API.SetPedCurrentWeaponVisible(Game.PlayerPed.Handle, false, true, true, true);
-                
+
                 // Make the client point.
                 API.SetPedConfigFlag(API.GetPlayerPed(-1), 36, true);
                 API.TaskMoveNetwork(API.GetPlayerPed(-1), animSet, 0.5f, false, animDict, 24);
+                API.RemoveAnimDict(animDict);
             }
             else
             {
