@@ -25,7 +25,7 @@ namespace vMenuClient
 
         private bool firstTick = true;
         private bool dojMenu = false;
-        private bool pointing = false;
+        private bool pointing = true;
         private static bool permissionsSetupDone = false;
         private static bool optionsSetupDone = false;
         public static bool addonCarsLoaded = false;
