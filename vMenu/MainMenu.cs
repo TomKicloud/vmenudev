@@ -701,8 +701,8 @@ namespace vMenuClient
                 API.SetPedCurrentWeaponVisible(Game.PlayerPed.Handle, false, true, true, true);
                 
                 // Make the client point.
-                API.ClearPedTasks(API.GetPlayerPed(-1));
-                Function.Call(Hash._TASK_MOVE_NETWORK, Game.PlayerPed, animSet, 0.5f, false, animDict, 24);
+                API.SetPedConfigFlag(API.GetPlayerPed(-1), 36, true);
+                API.TaskMoveNetwork(API.GetPlayerPed(-1), animSet, 0.5f, false, animDict, 24);
             }
             else
             {
