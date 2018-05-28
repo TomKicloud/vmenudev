@@ -568,6 +568,11 @@ namespace vMenuClient
             {
                 Point();
             }
+
+            if (Game.IsControlJustReleased(0, Control.DropAmmo) && Cf.IsAllowed(Permission.MSTeleportToWp))
+            {
+                Cf.TeleportToWp();
+            }
         }
 
         private async Task ProcessActiveScenario()
