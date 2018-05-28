@@ -14,8 +14,6 @@ namespace vMenuClient
         #region Variables
         // Menu variable, will be defined in CreateMenu()
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
         private static VehicleData vd = new VehicleData();
 
@@ -31,6 +29,7 @@ namespace vMenuClient
 
         // Public variables (getters only), return the private variables.
         public bool VehicleGodMode { get; private set; } = UserDefaults.VehicleGodMode;
+        public bool VehicleSpecialGodMode { get; private set; } = UserDefaults.VehicleSpecialGodMode;
         public bool VehicleEngineAlwaysOn { get; private set; } = UserDefaults.VehicleEngineAlwaysOn;
         public bool VehicleNoSiren { get; private set; } = UserDefaults.VehicleNoSiren;
         public bool VehicleNoBikeHelemet { get; private set; } = UserDefaults.VehicleNoBikeHelmet;
@@ -40,6 +39,8 @@ namespace vMenuClient
         public bool VehiclePowerMultiplier { get; private set; } = false;
         public float VehicleTorqueMultiplierAmount { get; private set; } = 2f;
         public float VehiclePowerMultiplierAmount { get; private set; } = 2f;
+
+        private Dictionary<UIMenuItem, int> vehicleExtras = new Dictionary<UIMenuItem, int>();
         #endregion
 
         #region CreateMenu()
@@ -49,7 +50,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Vehicle Options", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Vehicle Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
@@ -60,14 +61,16 @@ namespace vMenuClient
             #region menu variables
             // Create Checkboxes.
             UIMenuCheckboxItem vehicleGod = new UIMenuCheckboxItem("Vehicle God Mode", VehicleGodMode, "Your vehicle will not be able to take visual or physical damage.");
+            UIMenuCheckboxItem vehicleSpecialGod = new UIMenuCheckboxItem("Special Vehicle God Mode", VehicleSpecialGodMode, "This option repairs your vehicle immediately when " +
+                "it gets damaged. This special god mode is needed for vehicles like the Phantom Wedge to keep it from breaking down with regular god mode turned on.");
             UIMenuCheckboxItem vehicleEngineAO = new UIMenuCheckboxItem("Engine Always On", VehicleEngineAlwaysOn, "Keeps your vehicle engine on when you exit your vehicle.");
             UIMenuCheckboxItem vehicleNoSiren = new UIMenuCheckboxItem("Disable Siren", VehicleNoSiren, "Disables your vehicle's siren. Only works if your vehicle actually has a siren.");
             UIMenuCheckboxItem vehicleNoBikeHelmet = new UIMenuCheckboxItem("No Bike Helmet", VehicleNoBikeHelemet, "No longer auto-equip a helmet when getting on a bike or quad.");
             UIMenuCheckboxItem vehicleFreeze = new UIMenuCheckboxItem("Freeze Vehicle", VehicleFrozen, "Freeze your vehicle's position.");
             UIMenuCheckboxItem torqueEnabled = new UIMenuCheckboxItem("Enable Torque Multiplier", VehicleTorqueMultiplier, "Enables the torque multiplier selected from the list below.");
             UIMenuCheckboxItem powerEnabled = new UIMenuCheckboxItem("Enable Power Multiplier", VehiclePowerMultiplier, "Enables the power multiplier selected from the list below.");
-            UIMenuCheckboxItem highbeamsOnHonk = new UIMenuCheckboxItem("Flash Highbeams On Honk", FlashHighbeamsOnHonk, "Turn on your highbeams on your vehicle when honking your horn. " +
-                "Does not work during the day when you have your lights turned off.");
+            UIMenuCheckboxItem highbeamsOnHonk = new UIMenuCheckboxItem("Flash Highbeams On Honk", FlashHighbeamsOnHonk, "Turn on your highbeams on your vehicle when honking your horn." +
+                " Does not work during the day when you have your lights turned off.");
 
             // Create buttons.
             UIMenuItem fixVehicle = new UIMenuItem("Repair Vehicle", "Repair any visual and physical damage present on your vehicle.");
@@ -197,6 +200,10 @@ namespace vMenuClient
             if (cf.IsAllowed(Permission.VOGod)) // GOD MODE
             {
                 menu.AddItem(vehicleGod);
+            }
+            if (cf.IsAllowed(Permission.VOSpecialGod)) // special god mode
+            {
+                menu.AddItem(vehicleSpecialGod);
             }
             if (cf.IsAllowed(Permission.VORepair)) // REPAIR VEHICLE
             {
@@ -422,6 +429,10 @@ namespace vMenuClient
                 if (item == vehicleGod) // God Mode Toggled
                 {
                     VehicleGodMode = _checked;
+                }
+                else if (item == vehicleSpecialGod) // special god mode
+                {
+                    VehicleSpecialGodMode = _checked;
                 }
                 else if (item == vehicleFreeze) // Freeze Vehicle Toggled
                 {
@@ -1092,7 +1103,8 @@ namespace vMenuClient
                     // Empty the menu in case there were leftover buttons from another vehicle.
                     if (VehicleComponentsMenu.MenuItems.Count > 0)
                     {
-                        VehicleComponentsMenu.MenuItems.Clear();
+                        VehicleComponentsMenu.Clear();
+                        vehicleExtras.Clear();
                         VehicleComponentsMenu.RefreshIndex();
                         VehicleComponentsMenu.UpdateScaleform();
                     }
@@ -1102,11 +1114,10 @@ namespace vMenuClient
                     // Check if the vehicle exists, it's actually a vehicle, it's not dead/broken and the player is in the drivers seat.
                     if (DoesEntityExist(veh) && !IsEntityDead(veh) && IsEntityAVehicle(veh) && GetPedInVehicleSeat(veh, -1) == PlayerPedId())
                     {
-
                         // Create a vehicle.
                         Vehicle vehicle = new Vehicle(veh);
 
-                        List<int> extraIds = new List<int>();
+                        //List<int> extraIds = new List<int>();
                         // Loop through all possible extra ID's (AFAIK: 0-14).
                         for (var extra = 0; extra < 14; extra++)
                         {
@@ -1114,11 +1125,15 @@ namespace vMenuClient
                             if (vehicle.ExtraExists(extra))
                             {
                                 // Add it's ID to the list.
-                                extraIds.Add(extra);
+                                //extraIds.Add(extra);
+
                                 // Create a checkbox for it.
                                 UIMenuCheckboxItem extraCheckbox = new UIMenuCheckboxItem($"Extra #{extra.ToString()}", vehicle.IsExtraOn(extra), extra.ToString());
                                 // Add the checkbox to the menu.
                                 VehicleComponentsMenu.AddItem(extraCheckbox);
+
+                                // Add it's ID to the dictionary.
+                                vehicleExtras[extraCheckbox] = extra;
                             }
                         }
 
@@ -1126,10 +1141,18 @@ namespace vMenuClient
                         VehicleComponentsMenu.OnCheckboxChange += (sender2, item2, _checked) =>
                         {
                             // Then toggle that extra.
-                            vehicle.ToggleExtra(extraIds[sender2.CurrentSelection], _checked);
+                            //vehicle.ToggleExtra(extraIds[sender2.CurrentSelection], _checked);
+                            if (vehicleExtras.TryGetValue(item2, out int extra))
+                            {
+                                vehicle.ToggleExtra(extra, _checked);
+                            }
+                            //if (vehicleExtras.ContainsKey(item2))
+                            //{
+                            //    int extra = 
+                            //}
                         };
 
-                        if (extraIds.Count > 0)
+                        if (vehicleExtras.Count > 0)
                         {
                             UIMenuItem backBtn = new UIMenuItem("Go Back", "Go back to the Vehicle Options menu.");
                             VehicleComponentsMenu.AddItem(backBtn);

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonFunctions.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="FunctionsController.cs" />
     <Compile Include="MainMenu.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="menus\VoiceChat.cs" />
     <Compile Include="menus\WeaponOptions.cs" />
     <Compile Include="menus\WeatherOptions.cs" />
-    <Compile Include="Models\Enums\Enums.cs" />
     <Compile Include="NoclipMenu.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="PedScenarios.cs" />
@@ -89,8 +89,5 @@
     </PostBuildEvent>
     <PostBuildEvent Condition=" '$(OS)' == 'Windows_NT'">copy /Y "D:\Tom Grobbe\Documents\GitHub Repos\vMenu\build\NativeUI.dll" "D:\FXserver\vMenu\resources\vMenu\"
 copy /Y "D:\Tom Grobbe\Documents\GitHub Repos\vMenu\build\vMenuClient.net.dll" "D:\FXserver\vMenu\resources\vMenu\"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent />
   </PropertyGroup>
 </Project>

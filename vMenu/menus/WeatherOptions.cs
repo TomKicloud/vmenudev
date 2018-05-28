@@ -13,8 +13,6 @@ namespace vMenuClient
     {
         // Variables
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
 
         public static Dictionary<string, UIMenuItem> weatherHashMenuIndex = new Dictionary<string, UIMenuItem>();
@@ -24,7 +22,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Weather Options", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Weather Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

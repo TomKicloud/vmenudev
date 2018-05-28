@@ -13,8 +13,6 @@ namespace vMenuClient
     {
         // Variables
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
         public static Dictionary<string, uint> AddonVehicles;
 
@@ -52,7 +50,7 @@ namespace vMenuClient
             };
 
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Vehicle Spawner", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Vehicle Spawner", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

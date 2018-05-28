@@ -32,7 +32,7 @@ namespace vMenuClient
             EventHandlers.Add("vMenu:SetPermissions", new Action<dynamic>(UpdatePermissions));
             EventHandlers.Add("vMenu:GoToPlayer", new Action<string>(SummonPlayer));
             EventHandlers.Add("vMenu:KillMe", new Action(KillMe));
-            EventHandlers.Add("vMenu:KickCallback", new Action<string>(KickCallback));
+            EventHandlers.Add("vMenu:Notify", new Action<string>(NotifyPlayer));
             EventHandlers.Add("vMenu:SetWeather", new Action<string, bool, bool>(SetWeather));
             EventHandlers.Add("vMenu:SetClouds", new Action<float, string>(SetClouds));
             EventHandlers.Add("vMenu:SetTime", new Action<int, int, bool>(SetTime));
@@ -42,9 +42,22 @@ namespace vMenuClient
             EventHandlers.Add("vMenu:SetupAddonWeapons", new Action<string, dynamic>(SetAddonModels));
             EventHandlers.Add("vMenu:GoodBye", new Action(GoodBye));
             EventHandlers.Add("vMenu:SetBanList", new Action<string>(UpdateBanList));
+            EventHandlers.Add("vMenu:OutdatedResource", new Action(NotifyOutdatedVersion));
 
             Tick += WeatherSync;
             Tick += TimeSync;
+        }
+
+        /// <summary>
+        /// Notifies the player that the current version of vMenu is outdated.
+        /// </summary>
+        private async void NotifyOutdatedVersion()
+        {
+            Debug.Write("vMenu is outdated, please update asap.\n");
+            await Delay(5000);
+            cf.Log("Sending alert now.");
+            Notify.Alert("vMenu is outdated, if you are the server administrator, please update vMenu as soon as possible.", true, true);
+
         }
 
         /// <summary>
@@ -145,7 +158,7 @@ namespace vMenuClient
                         RequestNamedPtfxAsset("core_snow");
                         while (!HasNamedPtfxAssetLoaded("core_snow"))
                         {
-                            await Delay(10);
+                            await Delay(0);
                         }
                         UseParticleFxAssetNextCall("core_snow");
                         SetForceVehicleTrails(true);
@@ -167,7 +180,7 @@ namespace vMenuClient
                     int tmpTimer = GetGameTimer();
                     while (GetGameTimer() - tmpTimer < 15500) // wait 15.5 _real_ seconds
                     {
-                        await Delay(0); // I guess Delay(0) isn't always bad, just needs to be used carefully
+                        await Delay(0);
                     }
                     SetWeatherTypeNow(currentWeatherType);
                     justChanged = true;
@@ -194,7 +207,7 @@ namespace vMenuClient
                 if (freezeTime)
                 {
                     // Time is set every tick to make sure it never changes (even with some lag).
-                    await Delay(10);
+                    await Delay(0);
                     NetworkOverrideClockTime(currentHours, currentMinutes, 0);
                 }
                 // Otherwise...
@@ -262,12 +275,12 @@ namespace vMenuClient
         }
 
         /// <summary>
-        /// Kick callback. Notifies the player why a kick was not successfull.
+        /// Used by events triggered from the server to notify a user.
         /// </summary>
-        /// <param name="reason"></param>
-        private void KickCallback(string reason)
+        /// <param name="message"></param>
+        private void NotifyPlayer(string message)
         {
-            MainMenu.Notify.Custom(reason, true, false);
+            Notify.Custom(message, true, false);
         }
 
         /// <summary>
@@ -275,7 +288,7 @@ namespace vMenuClient
         /// </summary>
         private void KillMe()
         {
-            MainMenu.Notify.Info("Someone wanted you dead.... Sorry.");
+            Notify.Info("Someone wanted you dead.... Sorry.");
             SetEntityHealth(PlayerPedId(), 0);
         }
 
@@ -285,7 +298,7 @@ namespace vMenuClient
         /// <param name="targetPlayer"></param>
         private void SummonPlayer(string targetPlayer)
         {
-            //MainMenu.Notify.Error(targetPlayer);
+            //MainMenu.Notification.Error(targetPlayer);
             cf.TeleportToPlayerAsync(GetPlayerFromServerId(int.Parse(targetPlayer)));
         }
     }

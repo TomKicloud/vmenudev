@@ -13,8 +13,6 @@ namespace vMenuClient
     {
         // Variables
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
 
         public bool UnlimitedAmmo { get; private set; } = UserDefaults.WeaponsUnlimitedAmmo;
@@ -34,7 +32,7 @@ namespace vMenuClient
         {
             #region create main weapon options menu and add items
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Weapon Options", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Weapon Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
@@ -797,10 +795,12 @@ namespace vMenuClient
                 if (item == noReload)
                 {
                     NoReload = _checked;
+                    Subtitle.Custom($"No reload is now {(_checked ? "enabled" : "disabled")}.");
                 }
                 else if (item == unlimitedAmmo)
                 {
                     UnlimitedAmmo = _checked;
+                    Subtitle.Custom($"Unlimited ammo is now {(_checked ? "enabled" : "disabled")}.");
                 }
             };
             #endregion

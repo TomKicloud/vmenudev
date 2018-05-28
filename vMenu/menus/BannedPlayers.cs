@@ -14,8 +14,6 @@ namespace vMenuClient
     {
         // Variables
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
 
         /// <summary>
@@ -37,7 +35,7 @@ namespace vMenuClient
         /// </summary>
         private void CreateMenu()
         {
-            menu = new UIMenu("DoJRP", "Banned Players Management", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Banned Players Management", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,

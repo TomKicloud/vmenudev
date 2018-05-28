@@ -7,7 +7,6 @@ using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using NativeUI;
 using Newtonsoft.Json;
-using CitizenFX.Core.Native;
 
 namespace vMenuClient
 {
@@ -15,15 +14,14 @@ namespace vMenuClient
     {
         #region Variables
         // Variables
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
+        //private readonly Notification Notify = MainMenu.Notify;
+        //private readonly Subtitles Subtitle = MainMenu.Subtitle;
         private string currentScenario = "";
         private Vehicle previousVehicle;
         private StorageManager sm = new StorageManager();
 
         public bool driveToWpTaskActive = false;
         public bool driveWanderTaskActive = false;
-        public bool inputOpenFromvMenu = false;
         #endregion
 
         /// <summary>
@@ -37,10 +35,7 @@ namespace vMenuClient
         /// </summary>
         /// <param name="label"></param>
         /// <returns></returns>
-        public string GetLocalizedName(string label)
-        {
-            return GetLabelText(label);
-        }
+        public string GetLocalizedName(string label) => GetLabelText(label);
         #endregion
 
         #region Get Localized Vehicle Display Name
@@ -49,10 +44,7 @@ namespace vMenuClient
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public string GetVehDisplayNameFromModel(string name)
-        {
-            return GetLabelText(GetDisplayNameFromVehicleModel((uint)GetHashKey(name)));
-        }
+        public string GetVehDisplayNameFromModel(string name) => GetLabelText(GetDisplayNameFromVehicleModel((uint)GetHashKey(name)));
         #endregion
 
         #region GetHashKey for other classes
@@ -61,10 +53,7 @@ namespace vMenuClient
         /// </summary>
         /// <param name="input">String to convert into a hash.</param>
         /// <returns>The has value of the input string.</returns>
-        public uint GetHash(string input)
-        {
-            return (uint)GetHashKey(input);
-        }
+        public uint GetHash(string input) => (uint)GetHashKey(input);
         #endregion
 
         #region DoesModelExist
@@ -73,20 +62,14 @@ namespace vMenuClient
         /// </summary>
         /// <param name="modelName">The model name</param>
         /// <returns></returns>
-        public bool DoesModelExist(string modelName)
-        {
-            return IsModelInCdimage((uint)GetHashKey(modelName));
-        }
+        public bool DoesModelExist(string modelName) => DoesModelExist((uint)GetHashKey(modelName));
 
         /// <summary>
         /// Does this model exist?
         /// </summary>
         /// <param name="modelHash">The model hash</param>
         /// <returns></returns>
-        public bool DoesModelExist(uint modelHash)
-        {
-            return IsModelInCdimage(modelHash);
-        }
+        public bool DoesModelExist(uint modelHash) => IsModelInCdimage(modelHash);
         #endregion
 
         #region GetVehicle from specified player id (if not specified, return the vehicle of the current player)
@@ -97,14 +80,7 @@ namespace vMenuClient
         /// <param name="ped">Get the vehicle for this player.</param>
         /// <param name="lastVehicle">If true, return the last vehicle, if false (default) return the current vehicle.</param>
         /// <returns>Returns a vehicle (int).</returns>
-        public int GetVehicle(int player = -1, bool lastVehicle = false)
-        {
-            if (player == -1)
-            {
-                return GetVehiclePedIsIn(PlayerPedId(), lastVehicle);
-            }
-            return GetVehiclePedIsIn(GetPlayerPed(player), lastVehicle);
-        }
+        public int GetVehicle(int player = -1, bool lastVehicle = false) => GetVehiclePedIsIn(GetPlayerPed(player), lastVehicle);
         #endregion
 
         #region GetVehicleModel (uint)(hash) from Entity/Vehicle (int)
@@ -113,10 +89,7 @@ namespace vMenuClient
         /// </summary>
         /// <param name="vehicle">Entity/vehicle.</param>
         /// <returns>Returns the (uint) model hash from a (vehicle) entity.</returns>
-        public uint GetVehicleModel(int vehicle)
-        {
-            return (uint)GetHashKey(GetEntityModel(vehicle).ToString());
-        }
+        public uint GetVehicleModel(int vehicle) => (uint)GetHashKey(GetEntityModel(vehicle).ToString());
         #endregion
 
         #region Drive Tasks (WIP)
@@ -140,39 +113,7 @@ namespace vMenuClient
                 SetDriverAbility(PlayerPedId(), 100f);
                 SetDriverAggressiveness(PlayerPedId(), 0f);
                 //TaskVehicleDriveToCoord(PlayerPedId(), veh, waypoint.X, waypoint.Y, waypoint.Z, GetVehicleModelMaxSpeed(model), 0, model, 1074528293, 12f, 0f);
-                TaskVehicleDriveToCoordLongrange(PlayerPedId(), veh, waypoint.X, waypoint.Y, waypoint.Z, GetVehicleModelMaxSpeed(model), 786603, 10f);
-
-                // Rushed = 1074528293
-                // Normal = 786603 according to gtaforums.com...
-                // www.gtaforums.com/topic/822314-guide-driving-styles/
-
-                // Although, adding the binary values of the driving flags gets 183 though, which is what RPH docs say Normal is?
-                // e.g. ( 1 | 2 | 4 | 16 | 32 | 128 ) = 183
-                // It might be just a different way of saying the same thing, but if 786603 doesn't work, try 183 I guess
-
-                /* VehicleDrivingFlags from RPH classes
-                 * 
-                 * public enum VehicleDrivingFlags : uint
-                    {
-                        None = 0,
-                        FollowTraffic = 1,
-                        YieldToCrossingPedestrians = 2,
-                        DriveAroundVehicles = 4,
-                        DriveAroundPeds = 16,
-                        DriveAroundObjects = 32,
-                        RespectIntersections = 128,
-                        Normal = 183,
-                        AllowWrongWay = 512,
-                        Reverse = 1024,
-                        AllowMedianCrossing = 262144,
-                        Emergency = 262710,
-                        DriveBySight = 4194304,
-                        IgnorePathFinding = 16777216,
-                        AvoidHighways = 536870912,
-                        StopAtDestination = 2147483648
-                    }
-                 */
-
+                TaskVehicleDriveToCoordLongrange(PlayerPedId(), veh, waypoint.X, waypoint.Y, waypoint.Z, GetVehicleModelMaxSpeed(model), 1074528293, 10f);
             }
         }
 
@@ -194,8 +135,26 @@ namespace vMenuClient
                 var model = (uint)GetEntityModel(veh);
                 SetDriverAbility(PlayerPedId(), 100f);
                 SetDriverAggressiveness(PlayerPedId(), 0f);
-                TaskVehicleDriveWander(PlayerPedId(), veh, GetVehicleModelMaxSpeed(model), 786603); // See comments above re: driving modes
+                TaskVehicleDriveWander(PlayerPedId(), veh, GetVehicleModelMaxSpeed(model), 1074528293);
             }
+        }
+        #endregion
+
+        #region Quit session & Quit game
+        /// <summary>
+        /// Quit the current network session, but leaves you connected to the server so addons/resources are still streamed.
+        /// </summary>
+        public void QuitSession() => NetworkSessionEnd(true, true);
+
+        /// <summary>
+        /// Quit the game after 5 seconds.
+        /// </summary>
+        public async void QuitGame()
+        {
+            Notify.Info("The game will exit in 5 seconds.", true, true);
+            Debug.WriteLine("Game will be terminated in 5 seconds, because the player used the Quit Game option in vMenu.");
+            await Delay(5000);
+            ForceSocialClubUpdate(); // bye bye
         }
         #endregion
 
@@ -267,7 +226,7 @@ namespace vMenuClient
             else
             {
                 Notify.Error(CommonErrors.PlayerNotFound, placeholderValue: "So the teleport has been cancelled.");
-                //Notify.Error("This player does not exist so the teleport has been cancelled.");
+                //Notification.Error("This player does not exist so the teleport has been cancelled.");
                 return;
             }
         }
@@ -294,7 +253,7 @@ namespace vMenuClient
             var z = 0f;
             while (!GetGroundZFor_3dCoord(pos.X, pos.Y, z, ref outputZ, true))
             {
-                await Delay(10);
+                await Delay(0);
                 if (GetGameTimer() - timer > 5000)
                 {
                     failed = true;
@@ -344,7 +303,7 @@ namespace vMenuClient
         }
 
         /// <summary>
-        /// 
+        /// Teleports to the player's waypoint. If no waypoint is set, notify the user.
         /// </summary>
         public async void TeleportToWp()
         {
@@ -356,7 +315,7 @@ namespace vMenuClient
             }
             else
             {
-                Notify.Error("You must set a waypoint before attempting to teleport to a waypoint.");
+                Notify.Error("You need to set a waypoint first!");
             }
         }
         #endregion
@@ -370,38 +329,48 @@ namespace vMenuClient
         /// <param name="reason"></param>
         public async void KickPlayer(Player player, bool askUserForReason, string providedReason = "You have been kicked.")
         {
-            // Default kick reason.
-            var defaultReason = "You have been kicked.";
-            var cancel = false;
-            // If we need to ask for the user's input and the default reason is the same as the provided reason, get the user input..
-            if (askUserForReason && providedReason == defaultReason)
+            if (player != null)
             {
-                var userInput = await GetUserInput("Enter Kick Message", "", 100);
-                // If the input is not invalid, set the kick reason to the user's custom message.
-                if (userInput != "NULL")
+                // Default kick reason.
+                string defaultReason = "You have been kicked.";
+                bool cancel = false;
+                // If we need to ask for the user's input and the default reason is the same as the provided reason, get the user input..
+                if (askUserForReason && providedReason == defaultReason)
                 {
-                    defaultReason += $" Reason: {userInput}";
+                    string userInput = await GetUserInput("Enter Kick Message", "", 100) ?? "NULL";
+                    // If the input is not invalid, set the kick reason to the user's custom message.
+                    if (userInput != "NULL")
+                    {
+                        defaultReason += $" Reason: {userInput}";
+                    }
+                    else
+                    {
+                        cancel = true;
+                        Notify.Error("An invalid kick reason was provided. Action cancelled.", true, true);
+                        return;
+                    }
+                }
+                // If the provided reason is not the same as the default reason, set the kick reason to the provided reason.
+                else if (providedReason != defaultReason)
+                {
+                    defaultReason = providedReason;
+                }
+
+                // Kick the player using the specified reason.
+                if (!cancel)
+                {
+                    TriggerServerEvent("vMenu:KickPlayer", player.ServerId, defaultReason);
+                    Log($"Attempting to kick player {player.Name} (server id: {player.ServerId}, client id: {player.Handle}).");
                 }
                 else
                 {
-                    cancel = true;
-                    return;
+                    Notify.Error("The kick action was cancelled because the kick reason was invalid.", true, true);
                 }
             }
-            // If the provided reason is not the same as the default reason, set the kick reason to the provided reason.
-            else if (providedReason != defaultReason)
+            else
             {
-                defaultReason = providedReason;
+                Notify.Error("The selected player is somehow invalid, action aborted.", true, true);
             }
-            // Otherwise, don't change anything.
-
-
-            // Kick the player using the specified reason.
-            if (!cancel)
-            {
-                TriggerServerEvent("vMenu:KickPlayer", player.ServerId, defaultReason);
-            }
-
         }
         #endregion
 
@@ -447,23 +416,23 @@ namespace vMenuClient
         }
         #endregion
 
-        #region Kill Player
+        #region Kill Player/commit suicide options
         /// <summary>
         /// Kill player
         /// </summary>
         /// <param name="player"></param>
-        public void KillPlayer(Player player)
-        {
-            TriggerServerEvent("vMenu:KillPlayer", player.ServerId);
-        }
+        public void KillPlayer(Player player) => TriggerServerEvent("vMenu:KillPlayer", player.ServerId);
 
+        /// <summary>
+        /// Kill yourself.
+        /// </summary>
         public async void CommitSuicide()
         {
             // Get the suicide animations ready.
             RequestAnimDict("mp_suicide");
             while (!HasAnimDictLoaded("mp_suicide"))
             {
-                await Delay(10);
+                await Delay(0);
             }
             // Decide if the death should be using a pill or a gun (randomly).
             bool takePill = new Random().Next(0, 2) == 0;
@@ -499,10 +468,7 @@ namespace vMenuClient
         /// Summon player.
         /// </summary>
         /// <param name="player"></param>
-        public void SummonPlayer(Player player)
-        {
-            TriggerServerEvent("vMenu:SummonPlayer", player.ServerId);
-        }
+        public void SummonPlayer(Player player) => TriggerServerEvent("vMenu:SummonPlayer", player.ServerId);
         #endregion
 
         #region Spectate function
@@ -606,14 +572,11 @@ namespace vMenuClient
                         }
                     }
                 }
-
-
             }
             else
             {
                 Notify.Alert("There are no more available seats to cycle through.");
             }
-
         }
         #endregion
 
@@ -630,7 +593,7 @@ namespace vMenuClient
             if (vehicleName == "custom")
             {
                 // Get the result.
-                string result = await GetUserInput("Enter Vehicle Name", "");
+                string result = await GetUserInput("Enter Vehicle Name", "Adder");
                 // If the result was not invalid.
                 if (result != "NULL")
                 {
@@ -666,6 +629,17 @@ namespace vMenuClient
         /// <param name="saveName">Used to get/set info about the saved vehicle data.</param>
         public async void SpawnVehicle(uint vehicleHash, bool spawnInside, bool replacePrevious, bool skipLoad, VehicleInfo vehicleInfo, string saveName = null)
         {
+            float speed = 0f;
+            float rpm = 0f;
+            if (IsPedInAnyVehicle(PlayerPedId(), false))
+            {
+                Vehicle tmpOldVehicle = new Vehicle(GetVehicle());
+                speed = tmpOldVehicle.Speed;
+                rpm = tmpOldVehicle.CurrentRPM;
+                tmpOldVehicle = null;
+            }
+
+
             var vehClass = GetVehicleClassFromName(vehicleHash);
             int modelClass = GetVehicleClassFromName(vehicleHash);
             if (!MainMenu.VehicleSpawnerMenu.allowedCategories[modelClass])
@@ -709,9 +683,13 @@ namespace vMenuClient
                     // Otherwise
                     else
                     {
-                        // Set the vehicle to be no longer needed. This will make the game engine decide when it should be removed (when all players get too far away).
-                        //previousVehicle.IsPersistent = false;
-                        //previousVehicle.MarkAsNoLongerNeeded();
+                        if (!Configuration.keepSpawnedVehiclesPersistent)
+                        {
+                            // Set the vehicle to be no longer needed. This will make the game engine decide when it should be removed (when all players get too far away).
+                            previousVehicle.IsPersistent = false;
+                            previousVehicle.PreviouslyOwnedByPlayer = false;
+                            previousVehicle.MarkAsNoLongerNeeded();
+                        }
                     }
                     previousVehicle = null;
                 }
@@ -746,8 +724,6 @@ namespace vMenuClient
                 PreviouslyOwnedByPlayer = true,
                 IsPersistent = true
             };
-            
-            SetEntityAsMissionEntity(vehicle.Handle,true,true);
 
             Log($"New vehicle, hash:{vehicleHash}, handle:{vehicle.Handle}, force-re-save-name:{(saveName ?? "NONE")}, created at x:{pos.X} y:{pos.Y} z:{(pos.Z + 1f)} " +
                 $"heading:{heading}");
@@ -822,6 +798,8 @@ namespace vMenuClient
 
             // Set the previous vehicle to the new vehicle.
             previousVehicle = vehicle;
+            vehicle.Speed = speed;
+            vehicle.CurrentRPM = rpm;
 
             // Discard the model.
             SetModelAsNoLongerNeeded(vehicleHash);
@@ -1002,10 +980,7 @@ namespace vMenuClient
         /// </summary>
         /// <param name="saveName"></param>
         /// <returns></returns>
-        public VehicleInfo GetSavedVehicleInfo(string saveName)
-        {
-            return sm.GetSavedVehicleInfo(saveName);
-        }
+        public VehicleInfo GetSavedVehicleInfo(string saveName) => sm.GetSavedVehicleInfo(saveName);
         #endregion
 
         #region Get Saved Vehicles Dictionary
@@ -1069,7 +1044,7 @@ namespace vMenuClient
                 // Wait until it's loaded.
                 while (!HasModelLoaded(modelHash))
                 {
-                    await Delay(10);
+                    await Delay(0);
                 }
                 // Model is loaded, return true.
                 return true;
@@ -1093,15 +1068,13 @@ namespace vMenuClient
         /// <returns>Reruns the input or "NULL" if cancelled.</returns>
         public async Task<string> GetUserInput(string windowTitle = null, string defaultText = null, int maxInputLength = 20)
         {
-            inputOpenFromvMenu = true;
-            MainMenu.DontOpenMenus = true;
             // Create the window title string.
             var spacer = "\t";
             AddTextEntry($"{GetCurrentResourceName().ToUpper()}_WINDOW_TITLE", $"{windowTitle ?? "Enter"}:{spacer}(MAX {maxInputLength.ToString()} Characters)");
 
             // Display the input box.
             DisplayOnscreenKeyboard(1, $"{GetCurrentResourceName().ToUpper()}_WINDOW_TITLE", "", defaultText ?? "", "", "", "", maxInputLength);
-            await Delay(10);
+            await Delay(0);
             // Wait for a result.
             while (true)
             {
@@ -1123,10 +1096,10 @@ namespace vMenuClient
                 // Still editing
                 else
                 {
-                    await Delay(10);
+                    await Delay(0);
                 }
                 // Just in case something goes wrong, add wait to prevent crashing.
-                await Delay(10);
+                await Delay(0);
             }
             // Get the result
             int status = UpdateOnscreenKeyboard();
@@ -1135,16 +1108,13 @@ namespace vMenuClient
             // If the result is not empty or null
             if (result != "" && result != null && status == 1)
             {
-                MainMenu.DontOpenMenus = false;
                 // Return result.
                 return result.ToString();
             }
             else
             {
-                MainMenu.DontOpenMenus = false;
                 return "NULL";
             }
-
         }
         #endregion
 
@@ -1171,14 +1141,14 @@ namespace vMenuClient
                 else
                 {
                     Notify.Error(CommonErrors.NoVehicle);
-                    //Notify.Error("You're not inside a vehicle!");
+                    //Notification.Error("You're not inside a vehicle!");
                 }
             }
             // No valid text was given.
             else
             {
                 Notify.Error(CommonErrors.InvalidInput);
-                //Notify.Error($"License plate text ~r~{(text == "NULL" ? "(empty input)" : text)} ~s~can not be used on a license plate!");
+                //Notification.Error($"License plate text ~r~{(text == "NULL" ? "(empty input)" : text)} ~s~can not be used on a license plate!");
             }
 
         }
@@ -1230,11 +1200,9 @@ namespace vMenuClient
         /// </summary>
         /// <param name="permission"></param>
         /// <returns></returns>
-        public bool IsAllowed(Permission permission)
-        {
+        public bool IsAllowed(Permission permission) =>
             // Get the permissions.
-            return PermissionsManager.IsAllowed(permission);
-        }
+            PermissionsManager.IsAllowed(permission);
         #endregion
 
         #region Play Scenarios
@@ -1257,7 +1225,7 @@ namespace vMenuClient
                 // Check if the player CAN play a scenario... 
                 //if (IsPedInAnyVehicle(PlayerPedId(), true))
                 //{
-                //    Notify.Alert("You can't start a scenario when you are inside a vehicle.", true, false);
+                //    Notification.Alert("You can't start a scenario when you are inside a vehicle.", true, false);
                 //    canPlay = false;
                 //}
                 if (IsPedRunning(PlayerPedId()))
@@ -1336,18 +1304,6 @@ namespace vMenuClient
                 ClearPedTasksImmediately(PlayerPedId());
             }
 
-        }
-
-        public void StopActiveScenario(bool stopImmediately)
-        {
-            currentScenario = "";
-            ClearPedTasks(PlayerPedId());
-            if (stopImmediately) ClearPedTasksImmediately(PlayerPedId());
-        }
-
-        public bool IsAnyScenarioPlaying()
-        {
-            return (!string.IsNullOrWhiteSpace(currentScenario));
         }
         #endregion
 
@@ -1513,19 +1469,13 @@ namespace vMenuClient
         /// <param name="newWeather">The new weather type.</param>
         /// <param name="blackout">Manual blackout mode enabled/disabled.</param>
         /// <param name="dynamicChanges">Dynamic weather changes enabled/disabled.</param>
-        public void UpdateServerWeather(string newWeather, bool blackout, bool dynamicChanges)
-        {
-            TriggerServerEvent("vMenu:UpdateServerWeather", newWeather, blackout, dynamicChanges);
-        }
+        public void UpdateServerWeather(string newWeather, bool blackout, bool dynamicChanges) => TriggerServerEvent("vMenu:UpdateServerWeather", newWeather, blackout, dynamicChanges);
 
         /// <summary>
         /// Modify the clouds for everyone. If removeClouds is true, then remove all clouds. If it's false, then randomize the clouds.
         /// </summary>
         /// <param name="removeClouds">Removes the clouds from the sky if true, otherwise randomizes the clouds type for all players.</param>
-        public void ModifyClouds(bool removeClouds)
-        {
-            TriggerServerEvent("vMenu:UpdateServerWeatherCloudsType", removeClouds);
-        }
+        public void ModifyClouds(bool removeClouds) => TriggerServerEvent("vMenu:UpdateServerWeatherCloudsType", removeClouds);
         #endregion
 
         #region Time Sync
@@ -1620,10 +1570,8 @@ namespace vMenuClient
         /// <param name="text">The text to display.</param>
         /// <param name="xPosition">The x position for the text draw origin.</param>
         /// <param name="yPosition">The y position for the text draw origin.</param>
-        public void DrawTextOnScreen(string text, float xPosition, float yPosition)
-        {
+        public void DrawTextOnScreen(string text, float xPosition, float yPosition) =>
             DrawTextOnScreen(text, xPosition, yPosition, size: 0.48f);
-        }
 
         /// <summary>
         /// Draw text on the screen at the provided x and y locations.
@@ -1632,10 +1580,8 @@ namespace vMenuClient
         /// <param name="xPosition">The x position for the text draw origin.</param>
         /// <param name="yPosition">The y position for the text draw origin.</param>
         /// <param name="size">The size of the text.</param>
-        public void DrawTextOnScreen(string text, float xPosition, float yPosition, float size)
-        {
+        public void DrawTextOnScreen(string text, float xPosition, float yPosition, float size) =>
             DrawTextOnScreen(text, xPosition, yPosition, size, CitizenFX.Core.UI.Alignment.Left);
-        }
 
         /// <summary>
         /// Draw text on the screen at the provided x and y locations.
@@ -1645,10 +1591,8 @@ namespace vMenuClient
         /// <param name="yPosition">The y position for the text draw origin.</param>
         /// <param name="size">The size of the text.</param>
         /// <param name="justification">Align the text. 0: center, 1: left, 2: right</param>
-        public void DrawTextOnScreen(string text, float xPosition, float yPosition, float size, CitizenFX.Core.UI.Alignment justification)
-        {
+        public void DrawTextOnScreen(string text, float xPosition, float yPosition, float size, CitizenFX.Core.UI.Alignment justification) =>
             DrawTextOnScreen(text, xPosition, yPosition, size, justification, 6);
-        }
 
         /// <summary>
         /// Draw text on the screen at the provided x and y locations.
@@ -1659,10 +1603,8 @@ namespace vMenuClient
         /// <param name="size">The size of the text.</param>
         /// <param name="justification">Align the text. 0: center, 1: left, 2: right</param>
         /// <param name="font">Specify the font to use (0-8).</param>
-        public void DrawTextOnScreen(string text, float xPosition, float yPosition, float size, CitizenFX.Core.UI.Alignment justification, int font)
-        {
+        public void DrawTextOnScreen(string text, float xPosition, float yPosition, float size, CitizenFX.Core.UI.Alignment justification, int font) =>
             DrawTextOnScreen(text, xPosition, yPosition, size, justification, font, false);
-        }
 
         /// <summary>
         /// Draw text on the screen at the provided x and y locations.
@@ -1693,6 +1635,7 @@ namespace vMenuClient
         }
         #endregion
 
+        #region ped (& ped mp info) info struct
         public struct MultiplayerPedInfo
         {
             // todo
@@ -1709,15 +1652,14 @@ namespace vMenuClient
             public Dictionary<int, int> drawableVariations;
             public Dictionary<int, int> drawableVariationTextures;
         };
+        #endregion
+
         #region Set Player Skin
         /// <summary>
         /// Sets the player's model to the provided modelName.
         /// </summary>
         /// <param name="modelName">The model name.</param>
-        public void SetPlayerSkin(string modelName, PedInfo pedCustomizationOptions)
-        {
-            SetPlayerSkin((uint)GetHashKey(modelName), pedCustomizationOptions);
-        }
+        public void SetPlayerSkin(string modelName, PedInfo pedCustomizationOptions) => SetPlayerSkin((uint)GetHashKey(modelName), pedCustomizationOptions);
 
         /// <summary>
         /// Sets the player's model to the provided modelHash.
@@ -1733,7 +1675,7 @@ namespace vMenuClient
                 RequestModel(modelHash);
                 while (!HasModelLoaded(modelHash))
                 {
-                    await Delay(10);
+                    await Delay(0);
                 }
                 SetPlayerModel(PlayerId(), modelHash);
                 SetPedDefaultComponentVariation(PlayerPedId());
@@ -1882,6 +1824,7 @@ namespace vMenuClient
         }
         #endregion
 
+        #region saved ped json string to ped info
         /// <summary>
         /// Load and convert json ped info into PedInfo struct.
         /// </summary>
@@ -1969,9 +1912,9 @@ namespace vMenuClient
             }
             return pi;
         }
+        #endregion
 
         #region Save and restore weapon loadouts when changing models
-
         private struct WeaponInfo
         {
             public int Ammo;
@@ -1979,7 +1922,9 @@ namespace vMenuClient
             public List<uint> Components;
             public int Tint;
         }
+
         private List<WeaponInfo> weaponsList = new List<WeaponInfo>();
+
         /// <summary>
         /// Saves all current weapons and components.
         /// </summary>
@@ -2020,7 +1965,7 @@ namespace vMenuClient
         /// </summary>
         public async void RestoreWeaponLoadout()
         {
-            await Delay(10);
+            await Delay(0);
             if (weaponsList.Count > 0)
             {
                 foreach (WeaponInfo wi in weaponsList)
@@ -2159,670 +2104,137 @@ namespace vMenuClient
         #region Set Player Walking Style
         public async void SetWalkingStyle(string walkingStyle)
         {
-            ClearPedAlternateMovementAnim(PlayerPedId(), 0, 1f);
-            ClearPedAlternateMovementAnim(PlayerPedId(), 1, 1f);
-            ClearPedAlternateMovementAnim(PlayerPedId(), 2, 1f);
-            ClearPedAlternateWalkAnim(PlayerPedId(), 1f);
-            API.ResetPedMovementClipset(Game.PlayerPed.Handle, 1.0f);
-
-            string animDict = null;
-            if (walkingStyle == "Injured")
+            if (IsPedModel(PlayerPedId(), (uint)GetHashKey("mp_f_freemode_01")) || IsPedModel(PlayerPedId(), (uint)GetHashKey("mp_m_freemode_01")))
             {
-                animDict = "move_m@injured";
-            }
-            else if (walkingStyle == "Tough Guy")
-            {
-                animDict = "move_m@tough_guy@";
-            }
-            else if (walkingStyle == "Femme")
-            {
-                animDict = "move_m@femme@";
-            }
-            else if (walkingStyle == "Gangster")
-            {
-                animDict = "move_m@gangster@a";
-            }
-            else if (walkingStyle == "Posh")
-            {
-                animDict = "move_m@posh@";
-            }
-            else if (walkingStyle == "Sexy")
-            {
-                animDict = "move_f@sexy";
-            }
-            else if (walkingStyle == "Business")
-            {
-                animDict = "move_m@business@a";
-            }
-            else if (walkingStyle == "Drunk")
-            {
-                animDict = "move_m@drunk@a";
-            }
-            else if (walkingStyle == "Hipster")
-            {
-                animDict = "move_m@hipster@a";
-            }
-            if (animDict != null)
-            {
-                if (!HasAnimDictLoaded(animDict))
+                bool isPedMale = IsPedModel(PlayerPedId(), (uint)GetHashKey("mp_m_freemode_01"));
+                ClearPedAlternateMovementAnim(PlayerPedId(), 0, 1f);
+                ClearPedAlternateMovementAnim(PlayerPedId(), 1, 1f);
+                ClearPedAlternateMovementAnim(PlayerPedId(), 2, 1f);
+                ClearPedAlternateWalkAnim(PlayerPedId(), 1f);
+                string animDict = null;
+                if (walkingStyle == "Injured")
                 {
-                    RequestAnimDict(animDict);
-                    while (!HasAnimDictLoaded(animDict))
+                    animDict = isPedMale ? "move_m@injured" : "move_f@injured";
+                }
+                else if (walkingStyle == "Tough Guy")
+                {
+                    animDict = isPedMale ? "move_m@tough_guy@" : "move_f@tough_guy@";
+                }
+                else if (walkingStyle == "Femme")
+                {
+                    animDict = isPedMale ? "move_m@femme@" : "move_f@femme@";
+                }
+                else if (walkingStyle == "Gangster")
+                {
+                    animDict = isPedMale ? "move_m@gangster@a" : "move_f@gangster@ng";
+                }
+                else if (walkingStyle == "Posh")
+                {
+                    animDict = isPedMale ? "move_m@posh@" : "move_f@posh@";
+                }
+                else if (walkingStyle == "Sexy")
+                {
+                    animDict = isPedMale ? null : "move_f@sexy@a";
+                }
+                else if (walkingStyle == "Business")
+                {
+                    animDict = isPedMale ? null : "move_f@business@a";
+                }
+                else if (walkingStyle == "Drunk")
+                {
+                    animDict = isPedMale ? "move_m@drunk@a" : "move_f@drunk@a";
+                }
+                else if (walkingStyle == "Hipster")
+                {
+                    animDict = isPedMale ? "move_m@hipster@a" : null;
+                }
+                if (animDict != null)
+                {
+                    if (!HasAnimDictLoaded(animDict))
                     {
-                        await Delay(10);
+                        RequestAnimDict(animDict);
+                        while (!HasAnimDictLoaded(animDict))
+                        {
+                            await Delay(0);
+                        }
+                    }
+                    SetPedAlternateMovementAnim(PlayerPedId(), 0, animDict, "idle", 1f, true);
+                    SetPedAlternateMovementAnim(PlayerPedId(), 1, animDict, "walk", 1f, true);
+                    SetPedAlternateMovementAnim(PlayerPedId(), 2, animDict, "run", 1f, true);
+                }
+                else if (walkingStyle != "Normal")
+                {
+                    if (isPedMale)
+                    {
+                        Notify.Error(CommonErrors.WalkingStyleNotForMale);
+                    }
+                    else
+                    {
+                        Notify.Error(CommonErrors.WalkingStyleNotForFemale);
                     }
                 }
-                    
-                SetPedAlternateMovementAnim(PlayerPedId(), 0, animDict, "idle", 1f, true);
-                SetPedAlternateMovementAnim(PlayerPedId(), 1, animDict, "walk", 1f, true);
-                SetPedAlternateMovementAnim(PlayerPedId(), 2, animDict, "run", 1f, true);
-                API.SetPedMovementClipset(Game.PlayerPed.Handle, animDict, 1.0f);
             }
-            else if (walkingStyle != "Normal")
+            else
             {
-                Notify.Error("Failed to use this walking style. This model does not support this walking style.", true);
+                Notify.Error("This feature only supports the multiplayer freemode male/female ped models.");
             }
         }
         #endregion
 
-        #region Create Blips
-
-        public void CreateBlips()
+        #region Disable Movement Controls
+        public void DisableMovementControlsThisFrame(bool disableMovement, bool disableCameraMovement)
         {
-            //Safehouse = 40,
-            //Garage2 = 50,
-            //GTAOPlayerSafehouse = 417,
-            //GTAOPlayerSafehouseDead = 418,
-            //GarageForSale = 369,
-            //Completed = 367,
-            //SafehouseForSale = 350,
-            //BountyHit = 303,
-
-            int open1 = API.AddBlipForCoord(2448.48f, 4977.57f, 57.4330f);
-            int open2 = API.AddBlipForCoord(-71.5885f, 6264.2f, 31.2179f); //cluckin bell
-            int open3 = API.AddBlipForCoord(3620.4f, 3743.74f, 28.6901f); //humane labs
-            int open4 = API.AddBlipForCoord(1121.54f, 2641.9f, 41.2971f); //motel
-            int open5 = API.AddBlipForCoord(2330.66f, 2573.8f, 46.7123f); //battery garage
-            int open6 = API.AddBlipForCoord(1391.94f, 1146.21f, 118.749f); //farm mansion
-            int open7 = API.AddBlipForCoord(-3092.93f, 346.163f, 14.4409f); //beach condo
-            int open8 = API.AddBlipForCoord(-774.938f, 310.977f, 85.6981f); //eclipse tower
-            int open9 = API.AddBlipForCoord(241.353f, 361.132f, 121.082f); //epsilon off-street storage room
-            int open10 = API.AddBlipForCoord(-107.61f, -9.10006f, 78.8356f); //small apt
-            int open11 = API.AddBlipForCoord(-1044.94f, -230.653f, 39.0144f); //life invader
-            int open12 = API.AddBlipForCoord(-632.481f, -238.269f, 38.0723f); //vangelico jewellery
-            int open13 = API.AddBlipForCoord(-583.175f, -282.91f, 35.4548f); //unfinished building
-            int open14 = API.AddBlipForCoord(-1012.51f, -480.672f, 39.9707f); //solomons
-            int open15 = API.AddBlipForCoord(-1896.4f, -570.371f, 11.8312f); //beach condo2
-            int open16 = API.AddBlipForCoord(137.559f, -613.671f, 44.2187f); //iaa
-            int open17 = API.AddBlipForCoord(104.346f, -744.276f, 45.7547f); //fib
-            int open18 = API.AddBlipForCoord(-74.4777f, -681.664f, 33.8156f); //union depository parking lot
-            int open19 = API.AddBlipForCoord(289.682f, -584.825f, 43.2609f); //hospital interior entrance
-            int open20 = API.AddBlipForCoord(718.132f, -976.571f, 24.909f); // lester kuruma heist setup warehouse
-            int open21 = API.AddBlipForCoord(-61.1991f, -1093.43f, 26.4959f); //bring stolen cars here, premium deluxe motor sports
-            int open22 = API.AddBlipForCoord(-1353.12f, -1127.52f, 4.06726f); //medium apartment
-            int open23 = API.AddBlipForCoord(-1149.36f, -1522.7f, 10.6281f); //cousin floyd's apartment
-            int open24 = API.AddBlipForCoord(-610.156f, -1608.65f, 26.8976f); //rogers salvage scrap
-            int open25 = API.AddBlipForCoord(-253.885f, -2027.53f, 29.946f); //fame or shame audition
-            int open26 = API.AddBlipForCoord(-14.3065f, -1442.07f, 31.1011f); //franklins
-            int open27 = API.AddBlipForCoord(239.485f, -1380.89f, 33.7418f); //alt hospital entrance
-            int open28 = API.AddBlipForCoord(486.97f, -1314.74f, 29.234f); //hayes auto garage
-            int open29 = API.AddBlipForCoord(257.477f, -1722.68f, 29.6541f); //lamars?
-            int open30 = API.AddBlipForCoord(132.582f, -2203.08f, 7.18643f); //torture garage
-            int open31 = API.AddBlipForCoord(959.647f, -2185.74f, 30.5073f); //cattle butchery
-            int open32 = API.AddBlipForCoord(1083.29f, -1974.89f, 32.4946f); //metal refinery
-            int open33 = API.AddBlipForCoord(1275.04f, -1721.64f, 54.6551f); //lesters
-            int open34 = API.AddBlipForCoord(-622.681f, 58.0646f, 43.2455f); //one of the high class apts i forget name
-
-            List<int> openBlips = new List<int>()
+            if (disableMovement)
             {
-                open1,
-                open2,
-                open3,
-                open4,
-                open5,
-                open6,
-                open7,
-                open8,
-                open9,
-                open10,
-                open11,
-                open12,
-                open13,
-                open14,
-                open15,
-                open16,
-                open17,
-                open18,
-                open19,
-                open20,
-                open21,
-                open22,
-                open23,
-                open24,
-                open25,
-                open26,
-                open27,
-                open28,
-                open29,
-                open30,
-                open31,
-                open32,
-                open33,
-                open34
-            };
-
-            foreach (int openBlip in openBlips)
-            {
-                API.SetBlipSprite(openBlip, 357);
-                API.SetBlipAsShortRange(openBlip, true);
-                SetBlipName(openBlip, "Interior");
+                Game.DisableControlThisFrame(0, Control.MoveDown);
+                Game.DisableControlThisFrame(0, Control.MoveDownOnly);
+                Game.DisableControlThisFrame(0, Control.MoveLeft);
+                Game.DisableControlThisFrame(0, Control.MoveLeftOnly);
+                Game.DisableControlThisFrame(0, Control.MoveLeftRight);
+                Game.DisableControlThisFrame(0, Control.MoveRight);
+                Game.DisableControlThisFrame(0, Control.MoveRightOnly);
+                Game.DisableControlThisFrame(0, Control.MoveUp);
+                Game.DisableControlThisFrame(0, Control.MoveUpDown);
+                Game.DisableControlThisFrame(0, Control.MoveUpOnly);
+                Game.DisableControlThisFrame(0, Control.VehicleFlyMouseControlOverride);
+                Game.DisableControlThisFrame(0, Control.VehicleMouseControlOverride);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveDown);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveDownOnly);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveLeft);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveLeftRight);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveRight);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveRightOnly);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveUp);
+                Game.DisableControlThisFrame(0, Control.VehicleMoveUpDown);
+                Game.DisableControlThisFrame(0, Control.VehicleSubMouseControlOverride);
             }
-
-            //shirt icons //71 pale yellow
-            int ponsonbys1 = API.AddBlipForCoord(-712.407f, -153.909f, 44.9965f);
-            int ponsonbys2 = API.AddBlipForCoord(-158.312f, -305.009f, 81.6358f);
-            int ponsonbys3 = API.AddBlipForCoord(-1455.1f, -233.229f, 53.6423f);
-
-            //shirt icons //71 pale yellow
-            int discount1 = API.AddBlipForCoord(80.665f, -1391.67f, 34.8334f);
-            int discount2 = API.AddBlipForCoord(1687.98f, 4820.54f, 45.9631f);
-            int discount3 = API.AddBlipForCoord(-1098.12f, 2709.18f, 19.1079f);
-            int discount4 = API.AddBlipForCoord(1197.97f, 2704.22f, 43.0591f);
-            int discount5 = API.AddBlipForCoord(-0.823129f, 6514.77f, 36.1644f);
-
-            //shirt icons //71 pale yellow
-            int binco1 = API.AddBlipForCoord(-818.52f, -1077.54f, 15.4707f);
-            int binco2 = API.AddBlipForCoord(419.633f, -809.586f, 36.2622f);
-
-            //shirt icons //71 pale yellow
-            int suburban1 = API.AddBlipForCoord(-1199.71f, -776.697f, 26.2131f);
-            int suburban2 = API.AddBlipForCoord(618.287f, 2752.56f, 48.5239f);
-            int suburban3 = API.AddBlipForCoord(126.786f, -212.513f, 59.8468f);
-            int suburban4 = API.AddBlipForCoord(-3168.87f, 1055.28f, 27.6547f);
-
-            List<int> clothingBlips = new List<int>()
+            if (disableCameraMovement)
             {
-                ponsonbys1,
-                ponsonbys2,
-                ponsonbys3,
-                discount1,
-                discount2,
-                discount3,
-                discount4,
-                discount5,
-                binco1,
-                binco2,
-                suburban1,
-                suburban2,
-                suburban3,
-                suburban4
-            };
-
-            foreach (int clothingBlip in clothingBlips)
-            {
-                API.SetBlipSprite(clothingBlip, 73);
-                API.SetBlipColour(clothingBlip, 71);
-                API.SetBlipAsShortRange(clothingBlip, true);
-                SetBlipName(clothingBlip, "Clothing Store");
+                Game.DisableControlThisFrame(0, Control.LookBehind);
+                Game.DisableControlThisFrame(0, Control.LookDown);
+                Game.DisableControlThisFrame(0, Control.LookDownOnly);
+                Game.DisableControlThisFrame(0, Control.LookLeft);
+                Game.DisableControlThisFrame(0, Control.LookLeftOnly);
+                Game.DisableControlThisFrame(0, Control.LookLeftRight);
+                Game.DisableControlThisFrame(0, Control.LookRight);
+                Game.DisableControlThisFrame(0, Control.LookRightOnly);
+                Game.DisableControlThisFrame(0, Control.LookUp);
+                Game.DisableControlThisFrame(0, Control.LookUpDown);
+                Game.DisableControlThisFrame(0, Control.LookUpOnly);
+                Game.DisableControlThisFrame(0, Control.ScaledLookDownOnly);
+                Game.DisableControlThisFrame(0, Control.ScaledLookLeftOnly);
+                Game.DisableControlThisFrame(0, Control.ScaledLookLeftRight);
+                Game.DisableControlThisFrame(0, Control.ScaledLookUpDown);
+                Game.DisableControlThisFrame(0, Control.ScaledLookUpOnly);
+                Game.DisableControlThisFrame(0, Control.VehicleDriveLook);
+                Game.DisableControlThisFrame(0, Control.VehicleDriveLook2);
+                Game.DisableControlThisFrame(0, Control.VehicleLookBehind);
+                Game.DisableControlThisFrame(0, Control.VehicleLookLeft);
+                Game.DisableControlThisFrame(0, Control.VehicleLookRight);
+                Game.DisableControlThisFrame(0, Control.NextCamera);
+                Game.DisableControlThisFrame(0, Control.VehicleFlyAttackCamera);
+                Game.DisableControlThisFrame(0, Control.VehicleCinCam);
             }
-
-            //lsc //10 //icey grape
-            int lsc1 = API.AddBlipForCoord(-1145.29f, -1991.23f, 13.1622f);
-            int lsc2 = API.AddBlipForCoord(723.129f, -1089.07f, 31.1061f);
-            int lsc3 = API.AddBlipForCoord(-354.526f, -135.274f, 59.9924f);
-            int lsc4 = API.AddBlipForCoord(1174.8f, 2644.42f, 43.5054f);
-            int lsc5 = API.AddBlipForCoord(110.046f, 6623.03f, 39.2303f); //beekers
-            int lsc6 = API.AddBlipForCoord(-207.123f, -1310.3f, 31.296f); //bennys shop
-
-            List<int> lscBlips = new List<int>()
-            {
-                lsc1,
-                lsc2,
-                lsc3,
-                lsc4,
-                lsc5,
-                lsc6
-            };
-
-            foreach (int lscBlip in lscBlips)
-            {
-                API.SetBlipSprite(lscBlip, 72);
-                API.SetBlipColour(lscBlip, 10);
-                API.SetBlipAsShortRange(lscBlip, true);
-            }
-
-            //tattoos //41 //flesh
-            int tattoo1 = API.AddBlipForCoord(321.737f, 179.474f, 127.758f);
-            int tattoo2 = API.AddBlipForCoord(1861.78f, 3750.06f, 37.2415f);
-            int tattoo3 = API.AddBlipForCoord(-290.16f, 6199.09f, 35.6482f);
-            int tattoo4 = API.AddBlipForCoord(-1156.55f, -1420.59f, 1126.49f);
-            int tattoo5 = API.AddBlipForCoord(1322.4f, -1651.04f, 57.4641f);
-            int tattoo6 = API.AddBlipForCoord(-3196.48f, 1074.81f, 25.4839f);
-
-            List<int> tattooBlips = new List<int>()
-            {
-                tattoo1,
-                tattoo2,
-                tattoo3,
-                tattoo4,
-                tattoo5,
-                tattoo6,
-            };
-
-            foreach (int tattooBlip in tattooBlips)
-            {
-                API.SetBlipSprite(tattooBlip, 75);
-                API.SetBlipColour(tattooBlip, 41);
-                API.SetBlipAsShortRange(tattooBlip, true);
-            }
-
-            //gun //6 // red
-            int ammo1 = API.AddBlipForCoord(1697.88f, 3753.23f, 39.1827f);
-            int ammo2 = API.AddBlipForCoord(244.749f, -45.6379f, 83.3083f);
-            int ammo3 = API.AddBlipForCoord(843.485f, -1025.05f, 37.0438f);
-            int ammo4 = API.AddBlipForCoord(-325.984f, 6077.07f, 37.1471f);
-            int ammo5 = API.AddBlipForCoord(-664.477f, -944.667f, 21.7855f);
-            int ammo6 = API.AddBlipForCoord(-1313.87f, -391.032f, 43.3075f);
-            int ammo7 = API.AddBlipForCoord(-1112.89f, 2690.44f, 18.5839f);
-            int ammo8 = API.AddBlipForCoord(-3165.23f, 1082.86f, 25.4796f);
-            int ammo9 = API.AddBlipForCoord(2569.69f, 302.509f, 117.451f);
-            int ammo10 = API.AddBlipForCoord(812.434f, -2148.97f, 39.4198f); //shooting range icon
-            int ammo11 = API.AddBlipForCoord(17.7044f, -1114.19f, 42.373f); //shooting range icon
-            
-            List<int> ammoBlips = new List<int>()
-            {
-                ammo1,
-                ammo2,
-                ammo3,
-                ammo4,
-                ammo5,
-                ammo6,
-                ammo7,
-                ammo8,
-                ammo9,
-                ammo10,
-                ammo11
-            };
-
-            foreach (int ammoBlip in ammoBlips)
-            {
-                API.SetBlipSprite(ammoBlip, 110);
-                API.SetBlipColour(ammoBlip, 6);
-                API.SetBlipAsShortRange(ammoBlip, true);
-            }
-
-            //barber //15 //light blue
-            int barber1 = API.AddBlipForCoord(-822.051f, -187.093f, 48.1654f);
-            int barber2 = API.AddBlipForCoord(133.515f, -1710.83f, 36.5914f);
-            int barber3 = API.AddBlipForCoord(-1287.14f, -1116.47f, 10.1592f);
-            int barber4 = API.AddBlipForCoord(1933.07f, 3726.17f, 36.7415f);
-            int barber5 = API.AddBlipForCoord(1208.28f, -470.83f, 71.8597f);
-            int barber6 = API.AddBlipForCoord(-30.4352f, -147.733f, 62.3003f);
-            int barber7 = API.AddBlipForCoord(-280.715f, 6231.77f, 37.1876f);
-            
-            List<int> barberBlips = new List<int>()
-            {
-                barber1,
-                barber2,
-                barber3,
-                barber4,
-                barber5,
-                barber6,
-                barber7
-            };
-
-            foreach (int barberBlip in barberBlips)
-            {
-                API.SetBlipSprite(barberBlip, 71);
-                API.SetBlipColour(barberBlip, 15);
-                API.SetBlipAsShortRange(barberBlip, true);
-            }
-
-            //store //43 //light green
-            int store1 = API.AddBlipForCoord(-1486.71f, -381.852f, 40.1634f);
-            int store2 = API.AddBlipForCoord(-1224.04f, -906.344f, 12.3264f);
-            int store3 = API.AddBlipForCoord(-711.191f, -912.376f, 19.2156f);
-            int store4 = API.AddBlipForCoord(29.5184f, -1344.23f, 29.497f);
-            int store5 = API.AddBlipForCoord(-48.8503f, -1753.41f, 29.421f);
-            int store6 = API.AddBlipForCoord(1159.23f, -322.147f, 69.205f);
-            int store7 = API.AddBlipForCoord(1138.09f, -981.366f, 46.4158f);
-            int store8 = API.AddBlipForCoord(378.322f, 327.247f, 103.566f);
-            int store9 = API.AddBlipForCoord(1699.92f, 4927.63f, 42.0637f);
-            int store10 = API.AddBlipForCoord(1965.32f, 3739.66f, 31.6488f);
-            int store11 = API.AddBlipForCoord(-2974.7f, 390.901f, 15.0319f);
-            int store12 = API.AddBlipForCoord(2683.1f, 3282.11f, 55.2406f);
-            
-            List<int> storeBlips = new List<int>()
-            {
-                store1,
-                store2,
-                store3,
-                store4,
-                store5,
-                store6,
-                store7,
-                store8,
-                store9,
-                store10,
-                store11,
-                store12
-            };
-
-            foreach (int storeBlip in storeBlips)
-            {
-                API.SetBlipSprite(storeBlip, 52);
-                API.SetBlipColour(storeBlip, 43);
-                API.SetBlipAsShortRange(storeBlip, true);
-                SetBlipName(storeBlip, "Convenience Store");
-            }
-
-            //cops //54 //dark blue
-            int policestation1 = API.AddBlipForCoord(430.568f, -979.734f, 43.6916f); //4
-            int policestation2 = API.AddBlipForCoord(642.056f, 0.739643f, 82.7867f); //1
-            int policestation3 = API.AddBlipForCoord(360.454f, -1584.85f, 29.2919f); //davis sheriff
-            int policestation4 = API.AddBlipForCoord(827.447f, -1290.29f, 28.2407f); //lspd
-            int policestation5 = API.AddBlipForCoord(-1108.19f, -845.159f, 19.3169f); //vespucci police dep
-            
-            List<int> policeBlips = new List<int>()
-            {
-                policestation1,
-                policestation2,
-                policestation3,
-                policestation4,
-                policestation5,
-            };
-
-            foreach (int policeBlip in policeBlips)
-            {
-                API.SetBlipSprite(policeBlip, 60);
-                API.SetBlipColour(policeBlip, 54);
-                API.SetBlipAsShortRange(policeBlip, true);
-            }
-
-            //sherriffs //10 //light brown
-            int sheriffOffice1 = API.AddBlipForCoord(-445.692f, 6014.96f, 31.7164f); //5 //los santos sheriff
-            int sheriffOffice2 = API.AddBlipForCoord(1853.78f, 3685.63f, 43.2671f);//county sherff
-
-            List<int> sheriffBlips = new List<int>()
-            {
-                sheriffOffice1,
-                sheriffOffice2
-            };
-
-            foreach (int sheriffBlip in sheriffBlips)
-            {
-                API.SetBlipSprite(sheriffBlip, 58);
-                API.SetBlipColour(sheriffBlip, 10);
-                API.SetBlipAsShortRange(sheriffBlip, true);
-                SetBlipName(sheriffBlip, "Sheriff's Office");
-            }
-
-            //fire //59 //red
-            int firestation1 = API.AddBlipForCoord(-635.936f, -121.363f, 38.9876f); //2 firestation
-            int firestation2 = API.AddBlipForCoord(-378.117f, 6117.44f, 35.4394f); //firestation
-            int firestation3 = API.AddBlipForCoord(1696.98f, 3586.01f, 34.8975f); //firestation
-
-            List<int> fireBlips = new List<int>()
-            {
-                firestation1,
-                firestation2,
-                firestation3
-            };
-
-            foreach (int fireBlip in fireBlips)
-            {
-                API.SetBlipSprite(fireBlip, 436);
-                API.SetBlipColour(fireBlip, 59); //fire station red
-                API.SetBlipAsShortRange(fireBlip, true);
-                SetBlipName(fireBlip, "Fire Station");
-            }
-
-            //banks //2 //money green
-            int bank1 = API.AddBlipForCoord(246.205f, 215.997f, 106.287f); //pac
-            int bank2 = API.AddBlipForCoord(-1212.97f, -330.251f, 37.787f); //fleeca
-            int bank3 = API.AddBlipForCoord(149.762f, -1040.02f, 29.3741f); //fleeca
-            int bank4 = API.AddBlipForCoord(-112.424f, 6465.32f, 37.2196f); //blaine
-            int bank5 = API.AddBlipForCoord(-2966.27f, 482.97f, 15.6927f); //fleeca
-            
-            List<int> bankBlips = new List<int>()
-            {
-                bank1,
-                bank2,
-                bank3,
-                bank4,
-                bank5
-            };
-
-            foreach (int bankBlip in bankBlips)
-            {
-                API.SetBlipSprite(bankBlip, 108);
-                API.SetBlipColour(bankBlip, 2);
-                API.SetBlipAsShortRange(bankBlip, true);
-                SetBlipName(bankBlip, "Bank");
-            }
-
-            //cablecar //47 //orange
-            int cablecar1 = API.AddBlipForCoord(-742.192f, 5594.84f, 50.6404f);
-            int cablecar2 = API.AddBlipForCoord(446.409f, 5571.24f, 795.165f);
-            
-            List<int> cableCarBlips = new List<int>()
-            {
-                cablecar1,
-                cablecar2
-            };
-
-            foreach (int cableCarBlip in cableCarBlips)
-            {
-                API.SetBlipSprite(cableCarBlip, 36);
-                API.SetBlipColour(cableCarBlip, 47);
-                API.SetBlipAsShortRange(cableCarBlip, true);
-            }
-
-            //carwash //15 //greenishblue
-            int carwash1 = API.AddBlipForCoord(-699.612f, -933.865f, 24.1095f);
-            int carwash2 = API.AddBlipForCoord(24.6443f, -1397.63f, 33.9966f);
-            
-            List<int> carWashBlips = new List<int>()
-            {
-                carwash1,
-                carwash2
-            };
-
-            foreach (int carWashBlip in carWashBlips)
-            {
-                API.SetBlipSprite(carWashBlip, 100);
-                API.SetBlipColour(carWashBlip, 15);
-                API.SetBlipAsShortRange(carWashBlip, true);
-            }
-
-            //airplay icon //57 //sky blue
-            int airport1 = API.AddBlipForCoord(-1333.18f, -3044.55f, 13.9443f); //flight school icon
-            int airport2 = API.AddBlipForCoord(1381.67f, 3130.1f, 40.8185f); //sandy shores
-            int airport3 = API.AddBlipForCoord(2044.32f, 4768.07f, 40.7285f);
-            
-            List<int> airportBlips = new List<int>()
-            {
-                airport1,
-                airport2,
-                airport3
-            };
-
-            foreach (int airportBlip in airportBlips)
-            {
-                API.SetBlipSprite(airportBlip, 90);
-                API.SetBlipColour(airportBlip, 57);
-                API.SetBlipAsShortRange(airportBlip, true);
-            }
-
-            //stripclub //8 //pink
-            int stripclub = API.AddBlipForCoord(135.023f, -1297.88f, 35.0099f);
-            API.SetBlipSprite(stripclub, 121);
-            API.SetBlipColour(stripclub, 8);
-            API.SetBlipAsShortRange(stripclub, true);
-
-            //helipad //53 //white blue
-            int helipad = API.AddBlipForCoord(-736.423f, -1456.24f, 5.00053f);
-            API.SetBlipSprite(helipad, 64);
-            API.SetBlipColour(helipad, 53);
-            API.SetBlipAsShortRange(helipad, true);
-            SetBlipName(helipad, "Helipad");
-
-            //boats //53 //white blue
-            int boat1 = API.AddBlipForCoord(-843.455f, -1367.09f, 1.60517f); //marina
-            API.SetBlipSprite(boat1, 410);
-            API.SetBlipColour(boat1, 53);
-            API.SetBlipAsShortRange(boat1, true);
-            SetBlipName(boat1, "LS Dock");
-
-            //music note //82 //lght green
-            int rebel = API.AddBlipForCoord(736.153f, 2583.14f, 79.6342f);
-            API.SetBlipSprite(rebel, 136);
-            API.SetBlipScale(rebel, 0.9f);
-            API.SetBlipColour(rebel, 82);
-            API.SetBlipAsShortRange(rebel, true);
-            SetBlipName(rebel, "Rebel Radio");
-
-            //theater //16 //cream
-            int theater1 = API.AddBlipForCoord(297.221f, 196.986f, 104.333f);
-            int theater2 = API.AddBlipForCoord(-1422.41f, -209.281f, 5452.14f);
-            int theater3 = API.AddBlipForCoord(395.852f, -712.105f, 85.6129f);
-            
-            List<int> theaterBlips = new List<int>()
-            {
-                theater1,
-                theater2,
-                theater3
-            };
-
-            foreach (int theaterBlip in theaterBlips)
-            {
-                API.SetBlipSprite(theaterBlip, 135);
-                API.SetBlipColour(theaterBlip, 16);
-                API.SetBlipAsShortRange(theaterBlip, true);
-            }
-
-            //Hospital //3 //blue
-            int hospital1 = API.AddBlipForCoord(355.202f, -591.237f, 74.1657f);
-            int hospital2 = API.AddBlipForCoord(337.301f, -1396.2f, 32.5092f);
-            int hospital3 = API.AddBlipForCoord(-473.578f, -339.958f, 91.0076f);
-            
-            List<int> hospitalBlips = new List<int>()
-            {
-                hospital1,
-                hospital2,
-                hospital3
-            };
-
-            foreach (int hospitalBlip in hospitalBlips)
-            {
-                API.SetBlipSprite(hospitalBlip, 61);
-                API.SetBlipColour(hospitalBlip, 3);
-                API.SetBlipAsShortRange(hospitalBlip, true);
-            }
-
-            //impound lot //67 //light blue
-            int impound = API.AddBlipForCoord(400.56f, -1631.13f, 29.29f);
-            API.SetBlipSprite(impound, 85);
-            API.SetBlipColour(impound, 67);
-            API.SetBlipAsShortRange(impound, true);
-            SetBlipName(impound, "Impound Lot");
-
-            //bar //27 //purple
-            int bar1 = API.AddBlipForCoord(-562.456f, 281.841f, 91.7978f);
-            int bar2 = API.AddBlipForCoord(-1389.57f, -587.167f, 35.1147f);
-            
-            List<int> barBlips = new List<int>()
-            {
-                bar1,
-                bar2
-            };
-
-            foreach (int barBlip in barBlips)
-            {
-                API.SetBlipSprite(barBlip, 93);
-                API.SetBlipColour(barBlip, 10);
-                API.SetBlipAsShortRange(barBlip, true);
-            }
-
-            //club //32 //mint blue
-            int comedy = API.AddBlipForCoord(-436.48f, 270.831f, 89.8888f);
-            API.SetBlipSprite(comedy, 102);
-            API.SetBlipColour(comedy, 32);
-            API.SetBlipAsShortRange(comedy, true);
-
-            //weed //2// green
-            int marijuana = API.AddBlipForCoord(-1171.82f, -1573.06f, 4.66363f);
-            API.SetBlipSprite(marijuana, 140);
-            API.SetBlipColour(marijuana, 2);
-            API.SetBlipAsShortRange(marijuana, true);
-            SetBlipName(marijuana, "Smoke On The Water");
-
-            //masks //75 //evil red
-            int masks = API.AddBlipForCoord(-1336.09f, -1278.12f, 11.5885f);
-            API.SetBlipSprite(masks, 362);
-            API.SetBlipColour(masks, 75);
-            API.SetBlipAsShortRange(masks, true);
-            SetBlipName(masks, "Mask Shop");
-
-            //ferriswheel  //77 //nice blue
-            int fairground = API.AddBlipForCoord(-1664.16f, -1126.2f, 13.2325f);
-            API.SetBlipSprite(fairground, 266);
-            API.SetBlipColour(fairground, 77);
-            API.SetBlipAsShortRange(fairground, true);
-
-            //golf //36 //canary yellow
-            int golf = API.AddBlipForCoord(-1325.35f, 60.5766f, 53.5388f);
-            API.SetBlipSprite(golf, 109);
-            API.SetBlipColour(golf, 36);
-            API.SetBlipAsShortRange(golf, true);
-
-            //tennis //24 //tennis ball green
-            int tennis = API.AddBlipForCoord(-1618.94f, 265.868f, 59.5503f);
-            API.SetBlipSprite(tennis, 122);
-            API.SetBlipColour(tennis, 24);
-            API.SetBlipAsShortRange(tennis, true);
-
-            //yellowJack //36 //light yellow
-            int yellowJack = API.AddBlipForCoord(1992.32f, 3050.51f, 54.5371f);
-            API.SetBlipSprite(yellowJack, 93);
-            API.SetBlipColour(yellowJack, 36);
-            API.SetBlipAsShortRange(yellowJack, true);
-            SetBlipName(yellowJack, "The Yellow Jack");
-
-            //fib //15 //cyan
-            int fib = API.AddBlipForCoord(150.126f, -754.591f, 262.865f);
-            API.SetBlipSprite(fib, 58);
-            API.SetBlipColour(fib, 15);
-            API.SetBlipAsShortRange(fib, true);
-            SetBlipName(fib, "Federal Investigations Bureau");
-
-            //liquorAce //25 //forest green
-            int liquorAce = API.AddBlipForCoord(1392.4f, 3604.94f, 34.98f);
-            API.SetBlipSprite(liquorAce, 93);
-            API.SetBlipColour(liquorAce, 25);
-            API.SetBlipAsShortRange(liquorAce, true);
-            SetBlipName(liquorAce, "Liquor Ace");
-
-            //racetrack //20 //dark yellow
-            int racetrack = API.AddBlipForCoord(1131.16f, 102.18f, 81.02f);
-            API.SetBlipSprite(racetrack, 315);
-            API.SetBlipColour(racetrack, 20);
-            API.SetBlipAsShortRange(racetrack, true);
-            SetBlipName(racetrack, "Vinewood Racetrack");
-
-            //ranger station //10 //light brown
-            int rangerStation = API.AddBlipForCoord(374.51f, 796.5f, 187.28f);
-            API.SetBlipSprite(rangerStation, 442);
-            API.SetBlipColour(rangerStation, 10);
-            API.SetBlipAsShortRange(rangerStation, true);
-            SetBlipName(rangerStation, "Ranger Station");
-        }
-
-        private void SetBlipName(int blip, string name)
-        {
-            API.BeginTextCommandSetBlipName("STRING");
-            API.AddTextComponentString(name);
-            API.EndTextCommandSetBlipName(blip);
         }
         #endregion
     }

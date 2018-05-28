@@ -13,8 +13,6 @@ namespace vMenuClient
     {
         // Menu variable, will be defined in CreateMenu()
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
 
 
@@ -24,7 +22,7 @@ namespace vMenuClient
         private void CreateMenu()
         {
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Online Players", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Online Players", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
@@ -76,19 +74,17 @@ namespace vMenuClient
                             ControlDisablingEnabled = false
                         };
                         PlayerMenu.SetMenuWidthOffset(50);
-                        PlayerMenu.RefreshIndex();
-                        PlayerMenu.UpdateScaleform();
 
 
                         // Create all player options buttons.
                         UIMenuItem teleportBtn = new UIMenuItem("Teleport To Player", "Teleport to this player.");
                         UIMenuItem teleportInVehBtn = new UIMenuItem("Teleport Into Vehicle", "Teleport into the player's vehicle.");
                         UIMenuItem setWaypointBtn = new UIMenuItem("Set Waypoint", "Set a waypoint to this player.");
+                        UIMenuItem spectateBtn = new UIMenuItem("Spectate Player", "Spectate this player.");
                         UIMenuItem summonBtn = new UIMenuItem("Summon Player", "Bring this player to your location.");
                         summonBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
                         UIMenuItem killBtn = new UIMenuItem("Kill Player", "Kill the selected player! Why are you so cruel :(");
                         killBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
-                        UIMenuItem spectateBtn = new UIMenuItem("Spectate Player", "Spectate this player.");
                         UIMenuItem kickPlayerBtn = new UIMenuItem("~r~Kick Player", "~r~Kick~s~ this player from the server, you need to specify a reason " +
                             "otherwise the kick will be cancelled.");
                         kickPlayerBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
@@ -99,22 +95,22 @@ namespace vMenuClient
                         tempBanBtn.SetRightBadge(UIMenuItem.BadgeStyle.Alert);
 
                         // Add all buttons to the player options submenu. Keeping permissions in mind.
-                        if (cf.IsAllowed(Permission.OPSpectate))
+                        if (cf.IsAllowed(Permission.OPTeleport))
                         {
-                            PlayerMenu.AddItem(spectateBtn);
+                            PlayerMenu.AddItem(teleportBtn);
+                            PlayerMenu.AddItem(teleportInVehBtn);
                         }
                         if (cf.IsAllowed(Permission.OPWaypoint))
                         {
                             PlayerMenu.AddItem(setWaypointBtn);
                         }
+                        if (cf.IsAllowed(Permission.OPSpectate))
+                        {
+                            PlayerMenu.AddItem(spectateBtn);
+                        }
                         if (cf.IsAllowed(Permission.OPSummon))
                         {
                             PlayerMenu.AddItem(summonBtn);
-                        }
-                        if (cf.IsAllowed(Permission.OPTeleport))
-                        {
-                            PlayerMenu.AddItem(teleportBtn);
-                            PlayerMenu.AddItem(teleportInVehBtn);
                         }
                         if (cf.IsAllowed(Permission.OPKill))
                         {
@@ -225,6 +221,9 @@ namespace vMenuClient
                         {
                             menu.Visible = true;
                         };
+
+                        PlayerMenu.RefreshIndex();
+                        PlayerMenu.UpdateScaleform();
                     }
                 };
             };

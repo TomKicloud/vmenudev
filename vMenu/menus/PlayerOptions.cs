@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using NativeUI;
-using vMenuClient.Models.Enums;
 
 namespace vMenuClient
 {
@@ -14,13 +13,9 @@ namespace vMenuClient
     {
         // Menu variable, will be defined in CreateMenu()
         private UIMenu menu;
-        private static Notification Notify = MainMenu.Notify;
-        private static Subtitles Subtitle = MainMenu.Subtitle;
         private static CommonFunctions cf = MainMenu.Cf;
 
         // Public variables (getters only), return the private variables.
-        public EPlayerBlipDisplayType PlayerBlipDisplayType { get; private set; } = UserDefaults.PlayerBlipDisplayType;
-        public bool PlayerOverheadNames { get; private set; } = UserDefaults.PlayerOverheadNames;
         public bool PlayerGodMode { get; private set; } = UserDefaults.PlayerGodMode;
         public bool PlayerInvisible { get; private set; } = false;
         public bool PlayerStamina { get; private set; } = UserDefaults.UnlimitedStamina;
@@ -39,7 +34,7 @@ namespace vMenuClient
         {
             #region create menu and menu items
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Player Options", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Player Options", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
@@ -48,12 +43,11 @@ namespace vMenuClient
             };
 
             // Create all checkboxes.
-            UIMenuCheckboxItem playerGamerTags = new UIMenuCheckboxItem("Player Overhead Names", PlayerOverheadNames, "Shows/hides nametags above other players");
             UIMenuCheckboxItem playerGodModeCheckbox = new UIMenuCheckboxItem("Godmode", PlayerGodMode, "Makes you invincible.");
             UIMenuCheckboxItem invisibleCheckbox = new UIMenuCheckboxItem("Invisible", PlayerInvisible, "Makes you invisible to yourself and others.");
             UIMenuCheckboxItem unlimitedStaminaCheckbox = new UIMenuCheckboxItem("Unlimited Stamina", PlayerStamina, "Allows you to run forever without slowing down or taking damage.");
-            UIMenuCheckboxItem fastRunCheckbox = new UIMenuCheckboxItem("Fast Run", false, "Get ~g~Snail~s~ powers and run very fast!");
-            UIMenuCheckboxItem fastSwimCheckbox = new UIMenuCheckboxItem("Fast Swim", false, "Get ~g~Snail 2.0~s~ powers and swim super fast!");
+            UIMenuCheckboxItem fastRunCheckbox = new UIMenuCheckboxItem("Fast Run", PlayerFastRun, "Get ~g~Snail~s~ powers and run very fast!");
+            UIMenuCheckboxItem fastSwimCheckbox = new UIMenuCheckboxItem("Fast Swim", PlayerFastSwim, "Get ~g~Snail 2.0~s~ powers and swim super fast!");
             UIMenuCheckboxItem superJumpCheckbox = new UIMenuCheckboxItem("Super Jump", PlayerSuperJump, "Get ~g~Snail 3.0~s~ powers and jump like a champ!");
             UIMenuCheckboxItem noRagdollCheckbox = new UIMenuCheckboxItem("No Ragdoll", PlayerNoRagdoll, "Disables player ragdoll, makes you not fall off your bike anymore.");
             UIMenuCheckboxItem neverWantedCheckbox = new UIMenuCheckboxItem("Never Wanted", PlayerNeverWanted, "Disables all wanted levels.");
@@ -71,35 +65,10 @@ namespace vMenuClient
             // Scenarios (list can be found in the PedScenarios class)
             UIMenuListItem playerScenarios = new UIMenuListItem("Player Scenarios", PedScenarios.Scenarios, 0, "Select a scenario and hit enter to start it. Selecting another scenario will override the current scenario. If you're already playing the selected scenario, selecting it again will stop the scenario.");
             UIMenuItem stopScenario = new UIMenuItem("Force Stop Scenario", "This will force a playing scenario to stop immediately, without waiting for it to finish it's 'stopping' animation.");
-
-            // Player Blips
-            List<dynamic> playerBlipsList = new List<dynamic> { "Disabled", "Enabled", "Pause Menu Only" };
-            UIMenuListItem playerBlips = new UIMenuListItem("Player Blips", playerBlipsList, 0, "Enable/disable player blips on either the minimap and pause menu, or pause menu only.~n~Press Enter to save your selection.");
-
             #endregion
 
             #region add items to menu based on permissions
             // Add all checkboxes to the menu. (keeping permissions in mind)
-            if (cf.IsAllowed(Permission.POPlayerBlips))
-            {
-                menu.AddItem(playerBlips);
-            }
-            else
-            {
-                // If no permissions, explicitly set blips to hidden, just for safety/OCD
-                PlayerBlipDisplayType = EPlayerBlipDisplayType.Hidden;
-            }
-
-            if (cf.IsAllowed(Permission.POPlayerOverheadNames))
-            {
-                menu.AddItem(playerGamerTags);
-            }
-            else
-            {
-                // If no permissions, explicitly set gamer tags to hidden, just for safety/OCD
-                PlayerOverheadNames = false;
-            }
-
             if (cf.IsAllowed(Permission.POGod))
             {
                 menu.AddItem(playerGodModeCheckbox);
@@ -164,11 +133,6 @@ namespace vMenuClient
                 {
                     PlayerGodMode = _checked;
                 }
-                // Player Overhead Names toggled
-                else if (item == playerGamerTags)
-                {
-                    PlayerOverheadNames = _checked;
-                }
                 // Invisibility toggled.
                 else if (item == invisibleCheckbox)
                 {
@@ -228,12 +192,6 @@ namespace vMenuClient
                 {
                     SetPlayerWantedLevel(PlayerId(), index, false);
                     SetPlayerWantedLevelNow(PlayerId(), false);
-                }
-                // Player Blips
-                else if (listItem == playerBlips)
-                {
-                    int option = index + 1;
-                    PlayerBlipDisplayType = (EPlayerBlipDisplayType)option;
                 }
                 // Player options (healing, cleaning, armor, dry/wet, etc)
                 else if (listItem == playerFunctions)
@@ -332,7 +290,9 @@ namespace vMenuClient
                 // Force Stop Scenario button
                 if (item == stopScenario)
                 {
-                    cf.StopActiveScenario(true);
+                    // Play a new scenario named "forcestop" (this scenario doesn't exist, but the "Play" function checks
+                    // for the string "forcestop", if that's provided as th scenario name then it will forcefully clear the player task.
+                    cf.PlayScenario("forcestop");
                 }
             };
             #endregion

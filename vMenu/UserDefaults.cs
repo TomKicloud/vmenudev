@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using static CitizenFX.Core.Native.API;
 using Newtonsoft.Json;
-using vMenuClient.Models.Enums;
 
 namespace vMenuClient
 {
@@ -18,22 +17,6 @@ namespace vMenuClient
 
         #region Public variables.
         #region PlayerOptions
-        public static EPlayerBlipDisplayType PlayerBlipDisplayType
-        {
-            get {
-                int val = GetSettingsInt("playerBlips");
-                if (val < 1 || val > 3) return EPlayerBlipDisplayType.Hidden;
-                else return (EPlayerBlipDisplayType)val;
-            }
-            set { SetSavedSettingsInt("playerBlips", (int)value); }
-        }
-
-        public static bool PlayerOverheadNames
-        {
-            get { return GetSettingsBool("playerOverheadNames"); }
-            set { SetSavedSettingsBool("playerOverheadNames", value); }
-        }
-
         public static bool PlayerGodMode
         {
             get { return GetSettingsBool("playerGodMode"); }
@@ -88,6 +71,11 @@ namespace vMenuClient
         {
             get { return GetSettingsBool("vehicleGodMode"); }
             set { SetSavedSettingsBool("vehicleGodMode", value); }
+        }
+        public static bool VehicleSpecialGodMode
+        {
+            get { return GetSettingsBool("VehicleSpecialGodMode"); }
+            set { SetSavedSettingsBool("VehicleSpecialGodMode", value); }
         }
 
         public static bool VehicleEngineAlwaysOn
@@ -201,9 +189,7 @@ namespace vMenuClient
         }
         #endregion
 
-
         #endregion
-
 
         #region Private functions
         /// <summary>
@@ -224,7 +210,7 @@ namespace vMenuClient
                 // Some options should be enabled by default:
                 if (kvpString == "unlimitedStamina" || kvpString == "miscDeathNotifications" || kvpString == "miscJoinQuitNotifications"
                     || kvpString == "vehicleSpawnerSpawnInside" || kvpString == "vehicleSpawnerReplacePrevious" || kvpString == "neverWanted"
-                    || kvpString == "voiceChatShowSpeaker" || kvpString == "voiceChatEnabled" || kvpString == "autoEquipParachuteWhenInPlane")
+                    || kvpString == "voiceChatShowSpeaker" || kvpString == "voiceChatEnabled" || kvpString == "autoEquipParachuteWhenInPlane" || kvpString == "vehicleHighbeamsOnHonk")
                 {
                     SetSavedSettingsBool(kvpString, true);
                     return true;
@@ -275,32 +261,6 @@ namespace vMenuClient
         }
 
         private static void SetSavedSettingsFloat(string kvpString, float newValue)
-        {
-            SetResourceKvpFloat(SETTINGS_PREFIX + kvpString, newValue);
-        }
-
-        private static int GetSettingsInt(string kvpString)
-        {
-            int savedValue = GetResourceKvpInt(SETTINGS_PREFIX + kvpString);
-            if (savedValue.ToString() != null)
-            {
-                if (savedValue.GetType() == typeof(int))
-                {
-                    return savedValue;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            else
-            {
-                SetSavedSettingsFloat(SETTINGS_PREFIX + kvpString, -1);
-                return -1;
-            }
-        }
-
-        private static void SetSavedSettingsInt(string kvpString, int newValue)
         {
             SetResourceKvpFloat(SETTINGS_PREFIX + kvpString, newValue);
         }
@@ -356,6 +316,8 @@ namespace vMenuClient
 
                 MiscShowLocation = MainMenu.MiscSettingsMenu.ShowLocation;
                 prefs.Add("MiscShowLocation", MainMenu.MiscSettingsMenu.ShowLocation);
+
+
             }
 
             if (MainMenu.VehicleOptionsMenu != null)
@@ -371,6 +333,9 @@ namespace vMenuClient
 
                 VehicleNoSiren = MainMenu.VehicleOptionsMenu.VehicleNoSiren;
                 prefs.Add("VehicleNoSiren", MainMenu.VehicleOptionsMenu.VehicleNoSiren);
+
+                VehicleHighbeamsOnHonk = MainMenu.VehicleOptionsMenu.FlashHighbeamsOnHonk;
+                prefs.Add("vehicleHighbeamsOnHonk", MainMenu.VehicleOptionsMenu.FlashHighbeamsOnHonk);
             }
 
             if (MainMenu.VehicleSpawnerMenu != null)
@@ -400,7 +365,7 @@ namespace vMenuClient
                 prefs.Add("WeaponsUnlimitedAmmo", MainMenu.WeaponOptionsMenu.UnlimitedAmmo);
             }
 
-            MainMenu.Notify.Success("Your settings have been saved.");
+            Notify.Success("Your settings have been saved.");
 
             MainMenu.Cf.Log($"Saving preferences:\n{JsonConvert.SerializeObject(prefs)}");
         }

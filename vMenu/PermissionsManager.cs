@@ -42,13 +42,12 @@ namespace vMenuClient
         POFunctions,
         POFreeze,
         POScenarios,
-        POPlayerBlips,
-        POPlayerOverheadNames,
 
         // Vehicle Options
         VOMenu,
         VOAll,
         VOGod,
+        VOSpecialGod,
         VORepair,
         VOWash,
         VOEngine,

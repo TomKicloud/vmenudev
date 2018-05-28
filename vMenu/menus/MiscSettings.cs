@@ -13,8 +13,6 @@ namespace vMenuClient
     {
         // Variables
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
 
         public bool ShowSpeedoKmh { get; private set; } = UserDefaults.MiscSpeedKmh;
@@ -35,7 +33,7 @@ namespace vMenuClient
         {
 
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Misc Settings", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Misc Settings", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
@@ -58,11 +56,47 @@ namespace vMenuClient
             UIMenuCheckboxItem nightVision = new UIMenuCheckboxItem("Toggle Night Vision", false, "Enable or disable night vision.");
             UIMenuCheckboxItem thermalVision = new UIMenuCheckboxItem("Toggle Thermal Vision", false, "Enable or disable thermal vision.");
 
-            UIMenuItem clearArea = new UIMenuItem("Clear Area Of Vehicles", "Clears the area around your player (100 meters) of Vehicles.");
-            UIMenuItem clearAreaPeds = new UIMenuItem("Clear Area Of Peds", "Clears the area around your player (100 meters) of Peds.");
-            UIMenuItem clearAreaObjects = new UIMenuItem("Clear Area Of Objects", "Clears the area around your player (100 meters) of Objects.");
+            UIMenuItem clearArea = new UIMenuItem("Clear Area", "Clears the area around your player (100 meters) of everything! Damage, dirt, peds, props, vehicles, etc. Everything gets cleaned up and reset.");
             UIMenuCheckboxItem lockCamX = new UIMenuCheckboxItem("Lock Camera Horizontal Rotation", false, "Locks your camera horizontal rotation. Could be useful in helicopters I guess.");
             UIMenuCheckboxItem lockCamY = new UIMenuCheckboxItem("Lock Camera Vertical Rotation", false, "Locks your camera vertical rotation. Could be useful in helicopters I guess.");
+
+            UIMenu connectionSubmenu = new UIMenu(GetPlayerName(PlayerId()), "Connection Options", true)
+            {
+                ScaleWithSafezone = false,
+                MouseControlsEnabled = false,
+                MouseEdgeEnabled = false,
+                ControlDisablingEnabled = false
+            };
+            UIMenuItem connectionSubmenuBtn = new UIMenuItem("Connection Options", "Server connection/game quit options.");
+            UIMenuItem quitSession = new UIMenuItem("Quit Session", "Leaves you connected to the server, but quits the network session. " +
+                "Use this if you need to have addons streamed but want to use the rockstar editor.");
+            UIMenuItem quitGame = new UIMenuItem("Quit Game", "Exits the game after 5 seconds.");
+            UIMenuItem disconnectFromServer = new UIMenuItem("Disconnect From Server", "Disconnects you from the server and returns you to the serverlist. " +
+                "~r~This feature is not recommended, quit the game instead for a better experience.");
+            connectionSubmenu.AddItem(quitSession);
+            connectionSubmenu.AddItem(quitGame);
+            connectionSubmenu.AddItem(disconnectFromServer);
+
+            MainMenu.Mp.Add(connectionSubmenu);
+            connectionSubmenu.RefreshIndex();
+            connectionSubmenu.UpdateScaleform();
+            menu.BindMenuToItem(connectionSubmenu, connectionSubmenuBtn);
+
+            connectionSubmenu.OnItemSelect += (sender, item, index) =>
+            {
+                if (item == quitGame)
+                {
+                    cf.QuitGame();
+                }
+                else if (item == quitSession)
+                {
+                    cf.QuitSession();
+                }
+                else if (item == disconnectFromServer)
+                {
+                    BaseScript.TriggerServerEvent("vMenu:DisconnectSelf");
+                }
+            };
 
             // Add menu items to the menu.
             if (cf.IsAllowed(Permission.MSTeleportToWp))
@@ -73,6 +107,7 @@ namespace vMenuClient
             // Always allowed
             menu.AddItem(speedKmh);
             menu.AddItem(speedMph);
+            menu.AddItem(connectionSubmenuBtn);
 
             if (cf.IsAllowed(Permission.MSShowCoordinates))
             {
@@ -101,8 +136,6 @@ namespace vMenuClient
             if (cf.IsAllowed(Permission.MSClearArea))
             {
                 menu.AddItem(clearArea);
-                menu.AddItem(clearAreaPeds);
-                menu.AddItem(clearAreaObjects);
             }
 
             // Always allowed
@@ -182,19 +215,7 @@ namespace vMenuClient
                 else if (item == clearArea)
                 {
                     var pos = Game.PlayerPed.Position;
-                    ClearAreaOfVehicles(pos.X, pos.Y, pos.Z, 100f, false, false, false, false, false);
-                }
-                // clear area peds
-                else if (item == clearAreaPeds)
-                {
-                    var pos = Game.PlayerPed.Position;
-                    ClearAreaOfPeds(pos.X, pos.Y, 100f, 100, 1);
-                }
-                // clear area objects
-                else if (item == clearAreaObjects)
-                {
-                    var pos = Game.PlayerPed.Position;
-                    ClearAreaOfObjects(pos.X, pos.Y, 100f, 100, 1);
+                    ClearAreaOfEverything(pos.X, pos.Y, pos.Z, 100f, false, false, false, false);
                 }
             };
         }

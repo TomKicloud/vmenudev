@@ -13,8 +13,6 @@ namespace vMenuClient
     {
         // Variables
         private UIMenu menu;
-        private Notification Notify = MainMenu.Notify;
-        private Subtitles Subtitle = MainMenu.Subtitle;
         private CommonFunctions cf = MainMenu.Cf;
         public bool EnableVoicechat = UserDefaults.VoiceChatEnabled;
         public bool ShowCurrentSpeaker = UserDefaults.ShowCurrentSpeaker;
@@ -49,7 +47,7 @@ namespace vMenuClient
             }
 
             // Create the menu.
-            menu = new UIMenu("DoJRP", "Voice Chat Settings", true)
+            menu = new UIMenu(GetPlayerName(PlayerId()), "Voice Chat Settings", true)
             {
                 ScaleWithSafezone = false,
                 MouseControlsEnabled = false,
@@ -62,14 +60,14 @@ namespace vMenuClient
 
             List<dynamic> proximity = new List<dynamic>()
             {
-                "Whisper [5m]",
-                "Whisper [10m]",
-                "Normal [15m]",
-                "Normal [20m]",
-                "Shout [100m]",
-                "Shout [300m]",
-                "Scream [1km]",
-                "Scream [2km]",
+                "5 m",
+                "10 m",
+                "15 m",
+                "20 m",
+                "100 m",
+                "300 m",
+                "1 km",
+                "2 km",
                 "Global",
             };
             UIMenuListItem voiceChatProximity = new UIMenuListItem("Voice Chat Proximity", proximity, proximityRange.IndexOf(currentProximity), "Set the voice chat receiving proximity in meters.");
