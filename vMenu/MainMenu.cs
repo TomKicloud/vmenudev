@@ -564,7 +564,7 @@ namespace vMenuClient
                 TriggerEvent("doj_menu:toggleMenu");
             }
 
-            if (Game.IsControlJustReleased(0, Control.SpecialAbilitySecondary) && !API.IsPedInAnyVehicle(Game.PlayerPed.Handle, true))
+            if (Game.IsControlJustReleased(0, Control.SpecialAbilitySecondary))
             {
                 Point();
             }
