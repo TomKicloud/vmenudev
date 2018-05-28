@@ -473,6 +473,16 @@ namespace vMenuClient
                             }
 
                         }
+
+                        if (Game.IsControlJustReleased(0, Control.SpecialAbilitySecondary))
+                        {
+                            Point();
+                        }
+
+                        if (Game.IsControlJustReleased(0, Control.DropAmmo) && Cf.IsAllowed(Permission.MSTeleportToWp))
+                        {
+                            Cf.TeleportToWp();
+                        }
                     }
                 }
                 // If the pause menu is active or all menus should be closed, close all menus.
@@ -562,16 +572,6 @@ namespace vMenuClient
                 dojMenu = false;
                 Mp.CloseAllMenus();
                 TriggerEvent("doj_menu:toggleMenu");
-            }
-
-            if (Game.IsControlJustReleased(0, Control.SpecialAbilitySecondary))
-            {
-                Point();
-            }
-
-            if (Game.IsControlJustReleased(0, Control.DropAmmo) && Cf.IsAllowed(Permission.MSTeleportToWp))
-            {
-                Cf.TeleportToWp();
             }
         }
 
