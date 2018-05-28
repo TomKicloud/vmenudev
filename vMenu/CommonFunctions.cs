@@ -2567,7 +2567,7 @@ namespace vMenuClient
 
             foreach (int fireBlip in fireBlips)
             {
-                API.SetBlipSprite(fireBlip, 60);
+                API.SetBlipSprite(fireBlip, 436);
                 API.SetBlipColour(fireBlip, 59); //fire station red
                 API.SetBlipAsShortRange(fireBlip, true);
                 SetBlipName(fireBlip, "Fire Station");
@@ -2716,9 +2716,10 @@ namespace vMenuClient
                 API.SetBlipAsShortRange(hospitalBlip, true);
             }
 
+            //impound lot //67 //light blue
             int impound = API.AddBlipForCoord(400.56f, -1631.13f, 29.29f);
-            API.SetBlipSprite(impound, 225);
-            API.SetBlipScale(impound, 0.8f);
+            API.SetBlipSprite(impound, 85);
+            API.SetBlipColour(impound, 67);
             API.SetBlipAsShortRange(impound, true);
             SetBlipName(impound, "Impound Lot");
 
@@ -2804,6 +2805,13 @@ namespace vMenuClient
             API.SetBlipColour(racetrack, 20);
             API.SetBlipAsShortRange(racetrack, true);
             SetBlipName(racetrack, "Vinewood Racetrack");
+
+            //ranger station //10 //light brown
+            int rangerStation = API.AddBlipForCoord(374.51f, 796.5f, 187.28f);
+            API.SetBlipSprite(rangerStation, 442);
+            API.SetBlipColour(rangerStation, 10);
+            API.SetBlipAsShortRange(rangerStation, true);
+            SetBlipName(rangerStation, "Ranger Station");
         }
 
         private void SetBlipName(int blip, string name)
