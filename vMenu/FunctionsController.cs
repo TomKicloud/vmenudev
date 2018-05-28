@@ -643,7 +643,7 @@ namespace vMenuClient
 			// So we set the prefix to "Near " (<streetname>).
 			if (Vdist2(currentPos.X, currentPos.Y, currentPos.Z, nodePos.X, nodePos.Y, nodePos.Z) > 1400f)
 			{
-				prefix = "~c~Near ~y~";
+				prefix = "~m~Near ~y~";
 			}
 
 			string headingCharacter = "";
