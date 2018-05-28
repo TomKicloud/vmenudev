@@ -680,23 +680,23 @@ namespace vMenuClient
 		    }
 
             // Draw the street name + crossing.
-            cf.DrawTextOnScreen(prefix + currentStreet + suffix, 0.234f + safeZoneSizeX, 0.928f - safeZoneSizeY, 0.48f);
+            cf.DrawTextOnScreen(prefix + currentStreet + suffix, 0.227f + safeZoneSizeX, 0.927f - safeZoneSizeY, 0.45f);
 			// Draw the zone name.
-			cf.DrawTextOnScreen(World.GetZoneLocalizedName(currentPos), 0.236f + safeZoneSizeX, 0.9495f - safeZoneSizeY, 0.45f);
+			cf.DrawTextOnScreen(World.GetZoneLocalizedName(currentPos), 0.227f + safeZoneSizeX, 0.947f - safeZoneSizeY, 0.40f);
 
 			// Draw the left border for the heading character.
-			cf.DrawTextOnScreen("~t~|", 0.188f + safeZoneSizeX, 0.920f - safeZoneSizeY, 1.2f, Alignment.Left);
+			cf.DrawTextOnScreen("~t~|", 0.188f + safeZoneSizeX, 0.920f - safeZoneSizeY, 1.0f, Alignment.Left);
 			// Draw the heading character.
-			cf.DrawTextOnScreen(headingCharacter, 0.208f + safeZoneSizeX, 0.920f - safeZoneSizeY, 1.2f, Alignment.Center);
+			cf.DrawTextOnScreen(headingCharacter, 0.205f + safeZoneSizeX, 0.920f - safeZoneSizeY, 1.0f, Alignment.Center);
 			// Draw the right border for the heading character.
-			cf.DrawTextOnScreen("~t~|", 0.228f + safeZoneSizeX, 0.920f - safeZoneSizeY, 1.2f, Alignment.Right);
+			cf.DrawTextOnScreen("~t~|", 0.222f + safeZoneSizeX, 0.920f - safeZoneSizeY, 1.0f, Alignment.Right);
 
 			// Get and draw the time.
 			var tth = GetClockHours();
 			var ttm = GetClockMinutes();
 			var th = (tth < 10) ? $"0{tth.ToString()}" : tth.ToString();
 			var tm = (ttm < 10) ? $"0{ttm.ToString()}" : ttm.ToString();
-			cf.DrawTextOnScreen($"~c~{th}:{tm}", 0.208f + safeZoneSizeX, 0.905f - safeZoneSizeY, 0.40f, Alignment.Center);
+			cf.DrawTextOnScreen($"~s~{th}:{tm}", 0.2365f + safeZoneSizeX, 0.909f - safeZoneSizeY, 0.37f, Alignment.Center);
 		}
 		#endregion
 		#region Voice Chat Tasks
